@@ -28,3 +28,18 @@ when receiving messages, and in turn, be more impactful as well.
 
 I've always loved video games and have keen interest in making my own as well, so this project will be meaningful
 to me in more ways than one.
+
+## User Stories
+
+- As a user, I want to be able to set my name, age and Birthday to my profile
+- As a user, I want to be able to select the type of pet I want
+- As a user, I want to be able to name my pet
+- As a user, I want to be able to navigate between menus of what I want to do with my pet
+- As a user, I want to be able to play with my pet
+- As a user, I want to be able to feed my pet
+- As a user, I want to be able to clean my pet's waste
+- As a user, I want to be able to view feedback messages based on my actions
+- As a user, I want to be able to select what mood I am in when prompted by my pet
+- As a user, I want to be able to view a nice message tailored to my mood
+- As a user, I want to be able to save a birthday message to my saved messages (multiple Xs to Y)
+- As a user, I want to be able to say goodbye to my pet and close the application
