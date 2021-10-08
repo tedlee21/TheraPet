@@ -6,7 +6,8 @@ import java.util.ArrayList;
 public class Inventory {
     private ArrayList<Food> storage;        //list of distinct types of Food
     private ArrayList<Integer> quantity;    //tandem list for quantity of each Food in storage
-    private static Integer MAX_SIZE = 19;   //maximum number slots allowed in an Inventory - 1
+
+    public static final Integer MAX_SIZE = 10;   //maximum number slots allowed in an Inventory - 1
 
 
      /* EFFECTS : creates new user Inventory with 20 spaces
@@ -23,13 +24,20 @@ public class Inventory {
     }
 
     // REQUIRES: valid list index number
-    // EFFECTS : reads the slot position of given index, and returns a statement
-    //           of its contents; returns null if there is nothing in the slot.
-    public String readSlot(Integer index) {
+    // EFFECTS : reads the slot position of given index, and returns a statement the Food
+    //           it contains; returns null if there is nothing in the slot.
+    public Food readFood(Integer index) {
         if (storage.get(index) != null) {
-            return "There are" + quantity.get(index) + "of" + storage.get(index) + "in the bag";
+            return storage.get(index);
         }
         return null;
+    }
+
+    public int readAmount(Integer index) {
+        if (quantity.get(index) != null) {
+            return quantity.get(index);
+        }
+        return 0;
     }
 
     // REQUIRES: amountFood > 0

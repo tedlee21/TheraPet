@@ -5,6 +5,7 @@ public class Profile {
     private String name;     //users name
     private int balance;     //current balance of user
 
+
     /*
      * REQUIRES: username has a non-zero length
      * EFFECTS : name on profile is set to username;
@@ -24,6 +25,7 @@ public class Profile {
     public String getName() {
         return name;
     }
+
 
     public int getBalance() {
         return balance;
