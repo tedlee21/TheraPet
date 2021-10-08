@@ -35,9 +35,10 @@ to me in more ways than one.
 - As a user, I want to be able to select the type of pet I want
 - As a user, I want to be able to name my pet
 - As a user, I want to be able to navigate between menus of what I want to do with my pet
-- As a user, I want to be able to receive daily allowance to add to my balance
+- As a user, I want to be able to take out a loan to add to my balance
 - As a user, I want to be able to buy food for my pet and store it in my inventory (multiple Xs to Y)
 - As a user, I want to be able to play with my pet
+- As a user, I want to be able to see different results when playing with a ball with different types of pets
 - As a user, I want to be able to feed my pet food from my inventory
 - As a user, I want to be able to view feedback messages based on my actions
 - As a user, I want to be able to select what mood I am in when prompted by my pet

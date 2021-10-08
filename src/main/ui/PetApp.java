@@ -14,9 +14,9 @@ public class PetApp {
     private Inventory bag;
     private Scanner input;
 
-    private static Food COOKIE = new Food("Cookie", 2);
-    private static Food ICE_CREAM = new Food("Ice Cream", 5);
-    private static Food MAC_N_CHEESE = new Food("Mac & Cheese", 10);
+    private static final Food COOKIE = new Food("Cookie", 2);
+    private static final Food ICE_CREAM = new Food("Ice Cream", 5);
+    private static final Food MAC_N_CHEESE = new Food("Mac & Cheese", 10);
 
 
     // EFFECTS : runs the digital pet application
@@ -146,11 +146,11 @@ public class PetApp {
 
         petSays();
         if (selection.equals("h")) {
-            System.out.println("YAY! I'm happy because you're happy! Let's continue to have a great day!");;
+            System.out.println("YAY! I'm happy because you're happy! Let's continue to have a great day!");
         } else if (selection.equals("s")) {
             System.out.println("Aw " + user.getName() + "I'm so sorry you're feeling down, try having some tea!");
         } else if (selection.equals("a")) {
-            System.out.println("Who made you upset! Whoever it is, I'll beat them up!!!");;
+            System.out.println("Who made you upset! Whoever it is, I'll beat them up!!!");
         } else {
             System.out.println("Life can be a lot sometimes. Better days will come, but until then, you have me!");
         }
@@ -251,11 +251,10 @@ public class PetApp {
             System.out.println("Well, alright then, here's a little something to get you going.");
             user.addBalance(20);
             System.out.println("20 coins were added to your wallet!");
-            printBalance();
         } else {
             System.out.println("Alright then, you better be going now.");
-            printBalance();
         }
+        printBalance();
     }
 
 
@@ -263,17 +262,17 @@ public class PetApp {
     private void playBall() {
         String type = myPet.getPetType();
 
-        if (type == "Dog") {
+        if (type.equals("Dog")) {
             System.out.println("Ooh Ooh! Ball!! Throw it far for me!!");
             System.out.println("*" + myPet.getPetName() + " runs for the ball and brings it back*");
             petSays();
             System.out.println("I got it!! I got it!!");
-        } else if (type == "Cat") {
+        } else if (type.equals("Cat")) {
             System.out.println("Hmmm a Ball?");
             System.out.println("*" + myPet.getPetName() + " bats the ball back and forth*");
             petSays();
             System.out.println("Amusing.");
-        } else if (type == "Bird") {
+        } else if (type.equals("Bird")) {
             System.out.println("I.. I don't know how to play with this!");
             System.out.println("*" + myPet.getPetName() + " tries to roll the ball but falls over!*");
         } else {
@@ -348,14 +347,15 @@ public class PetApp {
 
     // EFFECTS: prints out contents of user Inventory.  If the inventory slot is empty, prints "empty"
     public void printBag() {
+        System.out.println("\nBAG");
         for (int i = 0; i < Inventory.MAX_SIZE; i++) {
             Food f = bag.readFood(i);
             int c = bag.readAmount(i);
+
+            System.out.print((i + 1) + "slot: ");
             if (f != null) {
-                System.out.print((i + 1) + "slot: ");
                 System.out.println(f.getType() + " x " + c);
             } else {
-                System.out.print((i + 1) + "slot: ");
                 System.out.println(" empty ");
             }
         }
