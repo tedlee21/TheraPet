@@ -44,7 +44,7 @@ public class PetApp {
             }
         }
 
-        System.out.println(myPet.getPetName() + ": ");
+        petSays();
         System.out.println("Goodbye for now " + user.getName() + "!");
     }
 
@@ -59,6 +59,8 @@ public class PetApp {
             doShop();
         } else if (command.equals("b")) {
             printBag();
+        } else if (command.equals("c")) {
+            doBank();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -90,6 +92,7 @@ public class PetApp {
         System.out.println("\tf -> Feed");
         System.out.println("\ts -> Shop");
         System.out.println("\tb -> Bag");
+        System.out.println("\tc -> Coin Bank");
         System.out.println("\tq -> Quit");
     }
 
@@ -131,7 +134,7 @@ public class PetApp {
 
     // EFFECTS: prompts user to answer their mood then displays supportive message for that mood
     private void giveSupport() {
-        System.out.println(myPet.getPetName() + ": ");
+        petSays();
         System.out.println("How are you feeling today " + user.getName() + "?");
         String selection = "";  // force entry into loop
 
@@ -141,7 +144,7 @@ public class PetApp {
             selection = selection.toLowerCase();
         }
 
-        System.out.println(myPet.getPetName() + ": ");
+        petSays();
         if (selection.equals("h")) {
             System.out.println("YAY! I'm happy because you're happy! Let's continue to have a great day!");;
         } else if (selection.equals("s")) {
@@ -164,7 +167,7 @@ public class PetApp {
             selection = selection.toLowerCase();
         }
 
-        System.out.println(myPet.getPetName() + ": ");
+        petSays();
         if (selection.equals("t")) {
             System.out.println("Hi " + user.getName() + "!!");
             giveSupport();
@@ -177,9 +180,29 @@ public class PetApp {
         }
     }
 
-    //EFFECTS :
+    // MODIFIES: this
+    // EFFECTS : prompts user to select a slot from the Inventory with food to feed the pet;
+    //           method ends if Inventory is empty; otherwise feeds pet 1 of the selected food,
+    //           updates Inventory, and displays updated Inventory and pets reaction
     private void doFeed() {
-
+        System.out.println(myPet.getPetName() + " is hungry!");
+        if (bag.checkEmpty()) {
+            System.out.println("Your bag is empty! Go buy some food for " + myPet.getPetName() + "...");
+        } else {
+            int slot = -1;
+            //forces user to select valid slot
+            while (!(slot > -1) || !(slot < Inventory.MAX_SIZE) || (bag.readFood(slot) == null)) {
+                printBag();
+                System.out.println("Enter the slot number of the food you want to feed " + myPet.getPetName() + ".");
+                slot = input.nextInt() - 1;
+            }
+            Food eatenFood = bag.readFood(slot);
+            bag.removeFood(eatenFood, 1);
+            printBag();
+            System.out.println(myPet.getPetName() + " really enjoyed the " + eatenFood.getType() + "!");
+            petSays();
+            System.out.println("Thanks " + user.getName() + "!! Yum, Yum!");
+        }
     }
 
     // EFFECTS : prompts user to buy food or leave the shop; valid selection leads to check out
@@ -206,6 +229,35 @@ public class PetApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS : prompts user to choose if a loan is wanted; if yes, 20 coins
+    //           are added to the users balance and updated balance is displayed;
+    //           else, balance remains the same and is displayed
+    private void doBank() {
+        System.out.println("Welcome to the Coin Bank!");
+        printBalance();
+
+        String answer = "";   // force entry into loop
+
+        while (!(answer.equals("y") || answer.equals("n"))) {
+            System.out.println("Are you in need of a Loan, " + user.getName() + "?");
+            System.out.println("\ty -> yes");
+            System.out.println("\tn -> no");
+            answer = input.next();
+            answer = answer.toLowerCase();
+        }
+
+        if (answer.equals("y")) {
+            System.out.println("Well, alright then, here's a little something to get you going.");
+            user.addBalance(20);
+            System.out.println("20 coins were added to your wallet!");
+            printBalance();
+        } else {
+            System.out.println("Alright then, you better be going now.");
+            printBalance();
+        }
+    }
+
 
     // EFFECTS : displays results of playing with a ball depending on user's pet type
     private void playBall() {
@@ -214,12 +266,12 @@ public class PetApp {
         if (type == "Dog") {
             System.out.println("Ooh Ooh! Ball!! Throw it far for me!!");
             System.out.println("*" + myPet.getPetName() + " runs for the ball and brings it back*");
-            System.out.println(myPet.getPetName() + ": ");
+            petSays();
             System.out.println("I got it!! I got it!!");
         } else if (type == "Cat") {
             System.out.println("Hmmm a Ball?");
             System.out.println("*" + myPet.getPetName() + " bats the ball back and forth*");
-            System.out.println(myPet.getPetName() + ": ");
+            petSays();
             System.out.println("Amusing.");
         } else if (type == "Bird") {
             System.out.println("I.. I don't know how to play with this!");
@@ -227,7 +279,7 @@ public class PetApp {
         } else {
             System.out.println("This ball is as big as I am!!");
             System.out.println("*" + myPet.getPetName() + " curls up next to the ball*");
-            System.out.println(myPet.getPetName() + ": ");
+            petSays();
             System.out.println("My new best friend! ..Other than you of course!!");
         }
     }
@@ -281,6 +333,12 @@ public class PetApp {
         } else {
             return "Hedgehog";
         }
+    }
+
+    // EFFECTS : displays pets name and ":" to indicate following statement
+    //           is said by the pet
+    private void petSays() {
+        System.out.println(myPet.getPetName() + ": ");
     }
 
     // EFFECTS: prints current user balance to the screen

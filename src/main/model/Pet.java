@@ -7,7 +7,7 @@ public class Pet {
 
     /* REQUIRES: petName must have non-zero length
      * EFFECTS : pets name is set to petName, pets type is set to
-     * petType
+     *           petType
      */
     public Pet(String petName, String petType) {
         name = petName;

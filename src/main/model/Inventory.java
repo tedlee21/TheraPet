@@ -24,8 +24,8 @@ public class Inventory {
     }
 
     // REQUIRES: valid list index number
-    // EFFECTS : reads the slot position of given index, and returns a statement the Food
-    //           it contains; returns null if there is nothing in the slot.
+    // EFFECTS : reads the slot position of given index, and returns the Food
+    //           it contains; returns null if there is nothing in the slot
     public Food readFood(Integer index) {
         if (storage.get(index) != null) {
             return storage.get(index);
@@ -33,6 +33,9 @@ public class Inventory {
         return null;
     }
 
+    // REQUIRES: valid list index number
+    // EFFECTS : reads the slot position of given index, and returns the amount of
+    //           food contained in the slot; returns null if there is nothing in the slot
     public int readAmount(Integer index) {
         if (quantity.get(index) != null) {
             return quantity.get(index);
@@ -45,7 +48,7 @@ public class Inventory {
     // EFFECTS : returns true if inventory is not full and adds the amountFood of typeFood to
     //           preexisting quantity of the same Food, or if typeFood does not preexist in storage,
     //           sets amountFood of typeFood to the first empty spot in Inventory;
-    //           returns false otherwise.
+    //           returns false otherwise
     public boolean addFood(Food typeFood, int amountFood) {
         if (storage.contains(typeFood)) {
             int i = storage.indexOf(typeFood);
@@ -67,7 +70,7 @@ public class Inventory {
     // MODIFIES: this
     // EFFECTS : returns true if Inventory contains typeFood and then removes amountFood of
     //           typeFood from it; if amountFood > pre-existing amount of typeFood, clears typeFood
-    //           from inventory; returns false otherwise.
+    //           from inventory; returns false otherwise
     public boolean removeFood(Food typeFood, int amountFood) {
         if (storage.contains(typeFood)) {
             int i = storage.indexOf(typeFood);
@@ -89,6 +92,17 @@ public class Inventory {
         }   else {
             return false;
         }
+    }
+
+    // EFFECTS : checks inventory slots for Food, and returns false
+    //           if found; returns true if empty
+    public boolean checkEmpty() {
+        for (int c = 0; c < MAX_SIZE; c++) {
+            if (storage.get(c) != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

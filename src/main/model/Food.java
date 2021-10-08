@@ -10,7 +10,7 @@ public class Food {
      * REQUIRES: typeFood has a non-zero length
      * EFFECTS : type of Food is set to typeFood;
      *           if foodPrice >= 0 then price of Food is set to
-     *           foodPrice, otherwise price is zero.
+     *           foodPrice, otherwise price is zero
      */
     public Food(String typeFood, int foodPrice) {
         type = typeFood;
