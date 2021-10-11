@@ -7,7 +7,7 @@ public class Inventory {
     private ArrayList<Food> storage;        //list of distinct types of Food
     private ArrayList<Integer> quantity;    //tandem list for quantity of each Food in storage
 
-    public static final Integer MAX_SIZE = 10;   //maximum number slots allowed in an Inventory - 1
+    public static final Integer MAX_SIZE = 5;   //maximum number slots allowed in an Inventory - 1
 
 
      /* EFFECTS : creates new user Inventory with 20 spaces
@@ -54,7 +54,7 @@ public class Inventory {
             int i = storage.indexOf(typeFood);
             quantity.set(i, (quantity.get(i) + amountFood));
             return true;
-        } else if (storage.contains(null)) {
+        } else {
             for (int c = 0; c < MAX_SIZE; c++) {
                 if (storage.get(c) == null) {
                     storage.set(c, typeFood);
@@ -82,13 +82,6 @@ public class Inventory {
                 quantity.set(i, null);
             }
             return true;
-//            for (int c = amountFood; c > 0; c--) {
-//                if (quantity.get(i) > 0) {
-//                    quantity.set(i, quantity.get(i) - 1);
-//                } else {
-//                    c = 0;
-//                }
-//            }
         }   else {
             return false;
         }
@@ -96,7 +89,7 @@ public class Inventory {
 
     // EFFECTS : checks inventory slots for Food, and returns false
     //           if found; returns true if empty
-    public boolean checkEmpty() {
+    public boolean isEmpty() {
         for (int c = 0; c < MAX_SIZE; c++) {
             if (storage.get(c) != null) {
                 return false;

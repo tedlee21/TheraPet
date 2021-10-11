@@ -3,7 +3,7 @@ package ui;
 import model.Food;
 import model.Inventory;
 import model.Pet;
-import  model.Profile;
+import model.Profile;
 
 import java.util.Scanner;
 
@@ -148,7 +148,7 @@ public class PetApp {
         if (selection.equals("h")) {
             System.out.println("YAY! I'm happy because you're happy! Let's continue to have a great day!");
         } else if (selection.equals("s")) {
-            System.out.println("Aw " + user.getName() + "I'm so sorry you're feeling down, try having some tea!");
+            System.out.println("Aw " + user.getName() + ", I'm so sorry you're feeling down, try having some tea!");
         } else if (selection.equals("a")) {
             System.out.println("Who made you upset! Whoever it is, I'll beat them up!!!");
         } else {
@@ -186,7 +186,7 @@ public class PetApp {
     //           updates Inventory, and displays updated Inventory and pets reaction
     private void doFeed() {
         System.out.println(myPet.getPetName() + " is hungry!");
-        if (bag.checkEmpty()) {
+        if (bag.isEmpty()) {
             System.out.println("Your bag is empty! Go buy some food for " + myPet.getPetName() + "...");
         } else {
             int slot = -1;
@@ -352,7 +352,7 @@ public class PetApp {
             Food f = bag.readFood(i);
             int c = bag.readAmount(i);
 
-            System.out.print((i + 1) + "slot: ");
+            System.out.print("Slot " + (i + 1) + ": ");
             if (f != null) {
                 System.out.println(f.getType() + " x " + c);
             } else {
