@@ -7,7 +7,7 @@ house a digital pet that you can:
 - *Choose which type of pet to raise*
 - *Play with*
 - *Feed*
-- *Clean up after*
+- *Talk to*
 
 However, this is no ordinary pet. This pet will be there with you through thick and 
 thin, and give you motivation suited to the mood you're in! As you take care of your pet,
