@@ -346,7 +346,7 @@ public class PetApp {
     }
 
     // EFFECTS: prints out contents of user Inventory.  If the inventory slot is empty, prints "empty"
-    public void printBag() {
+    private void printBag() {
         System.out.println("\nBAG");
         for (int i = 0; i < Inventory.MAX_SIZE; i++) {
             Food f = bag.readFood(i);

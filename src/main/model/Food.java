@@ -3,8 +3,8 @@ package model;
 //represents food items user can purchase for
 // a set price, store in Inventory, and feed to a Pet
 public class Food {
-    private String type; //type of the Food ie, Apple
-    private int price;   //price of the food for user to purchase
+    private String type;      //type of the Food ie, Apple
+    private int price;        //price of the food for user to purchase
 
     /*
      * REQUIRES: typeFood has a non-zero length

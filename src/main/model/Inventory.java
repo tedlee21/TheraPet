@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 // represents a users inventory with slots in which to store different Food of varying quantities
 public class Inventory {
-    private ArrayList<Food> storage;        //list of distinct types of Food
-    private ArrayList<Integer> quantity;    //tandem list for quantity of each Food in storage
+    private ArrayList<Food> storage;            //list of distinct types of Food
+    private ArrayList<Integer> quantity;        //tandem list for quantity of each Food in storage
 
-    public static final Integer MAX_SIZE = 5;   //maximum number slots allowed in an Inventory - 1
+    public static final Integer MAX_SIZE = 5;   //maximum number slots allowed in an Inventory
 
 
      /* EFFECTS : creates new user Inventory with 20 spaces
