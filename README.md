@@ -44,3 +44,6 @@ to me in more ways than one.
 - As a user, I want to be able to select what mood I am in when prompted by my pet
 - As a user, I want to be able to view a nice message tailored to my mood
 - As a user, I want to be able to say goodbye to my pet and close the application
+
+- As a user, I want to be able to save the game from the main menu to file
+- As a user, I want to be able to load my game from file
