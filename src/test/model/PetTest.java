@@ -10,7 +10,7 @@ class PetTest {
 
     @BeforeEach
     public void runBefore() {
-        myPet = new Pet("Rufus", "Dog");
+        myPet = new Pet("Rufus", PetType.DOG);
     }
 
     @Test
@@ -20,7 +20,7 @@ class PetTest {
 
     @Test
     public void testGetNameNumbers() {
-        myPet = new Pet("50 Big Mac", "Cat");
+        myPet = new Pet("50 Big Mac", PetType.CAT);
         assertEquals("50 Big Mac", myPet.getPetName());
     }
 
@@ -31,7 +31,7 @@ class PetTest {
 
     @Test
     public void testGetTypeCat() {
-        myPet = new Pet("50 Big Mac", "Cat");
+        myPet = new Pet("50 Big Mac", PetType.CAT);
         assertEquals("Cat", myPet.getPetType());
     }
 }
