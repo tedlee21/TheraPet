@@ -1,6 +1,9 @@
 package persistence;
 
+import model.Food;
+import model.FoodType;
 import model.Profile;
+import model.Slot;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -43,26 +46,47 @@ public class JsonReader {
     private Profile parseProfile(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Profile pf = new Profile(name, jsonObject.getInt("balance"));
+        addStorage(pf, jsonObject);
         return pf;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
-//    private void addThingies(Profile pf, JSONObject jsonObject) {
-//        JSONArray jsonArray = jsonObject.getJSONArray("thingies");
-//        for (Object json : jsonArray) {
-//            JSONObject nextThingy = (JSONObject) json;
-//            addThingy(pf, nextThingy);
-//        }
-//    }
+    // MODIFIES: pf
+    // EFFECTS: parses storage from JSON object and adds them to profile
+    private void addStorage(Profile pf, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("storage");
+        int count = 0;
+        for (Object json : jsonArray) {
+            JSONObject nextSlot = (JSONObject) json;
+            addSlot(pf, nextSlot, count);
+            count++;
+        }
+    }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
-//    private void addThingy(WorkRoom wr, JSONObject jsonObject) {
-//        String name = jsonObject.getString("name");
-//        Category category = Category.valueOf(jsonObject.getString("category"));
-//        Thingy thingy = new Thingy(name, category);
-//        wr.addThingy(thingy);
-//    }
+    // MODIFIES: pf
+    // EFFECTS: parses slot from JSON object and adds it to profile
+    private void addSlot(Profile pf, JSONObject jsonObject, int count) {
+        JSONObject f = jsonObject.getJSONObject("food");
+        Integer amount = jsonObject.getInt("quantity");
+        addFood(pf, f, amount, count);
+    }
+
+    // MODIFIES: pf
+    // EFFECTS : parses food from JSON object and adds it to profile
+    private void addFood(Profile pf, JSONObject jsonObject, int amount, int count) {
+        FoodType type = FoodType.valueOf(jsonObject.getString("type"));
+        Integer price = jsonObject.getInt("price");
+
+        Food food = new Food(type, price);
+
+        if (type.equals(FoodType.COOKIE)) {                 //this section of code sets pre-existing food type in
+            food = Food.COOKIE;                             //JSON save as already defined instances of the same type;
+        } else if (type.equals(FoodType.ICE_CREAM)) {       //this prevents same foods treated as separate objects
+            food = Food.ICE_CREAM;
+        } else if (type.equals(FoodType.MAC_AND_CHEESE)) {
+            food = Food.MAC_N_CHEESE;
+        }
+        Slot slot = new Slot(food, amount);
+        pf.setSlot(slot, count);
+    }
 }
 

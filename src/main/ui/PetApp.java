@@ -17,10 +17,6 @@ public class PetApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    private static final Food COOKIE = new Food("Cookie", 2);
-    private static final Food ICE_CREAM = new Food("Ice Cream", 5);
-    private static final Food MAC_N_CHEESE = new Food("Mac & Cheese", 10);
-
 
     // EFFECTS : runs the digital pet application
     public PetApp() {
@@ -133,9 +129,9 @@ public class PetApp {
     // EFFECTS: displays menu of food to buy from the shop
     private void displayShopChoices() {
         System.out.println("\nWe have:");
-        System.out.println("\tc -> Cookies, " + COOKIE.getPrice() + " coins each");
-        System.out.println("\ti -> Ice Cream, " + ICE_CREAM.getPrice() + " coins each");
-        System.out.println("\tm -> Mac and Cheese, " + MAC_N_CHEESE.getPrice() + " coins each");
+        System.out.println("\tc -> Cookies, " + Food.COOKIE.getPrice() + " coins each");
+        System.out.println("\ti -> Ice Cream, " + Food.ICE_CREAM.getPrice() + " coins each");
+        System.out.println("\tm -> Mac and Cheese, " + Food.MAC_N_CHEESE.getPrice() + " coins each");
         System.out.println("\tl -> leave Shop");
     }
 
@@ -206,7 +202,7 @@ public class PetApp {
             Food eatenFood = user.readSlot(slot).getFood();
             user.removeFood(eatenFood, 1);
             printBag();
-            System.out.println(myPet.getPetName() + " really enjoyed the " + eatenFood.getType() + "!");
+            System.out.println(myPet.getPetName() + " really enjoyed the " + foodToString(eatenFood.getType()) + "!");
             petSays();
             System.out.println("Thanks " + user.getName() + "!! Yum, Yum!");
         }
@@ -296,23 +292,23 @@ public class PetApp {
     //           returns user to Shop once done
     private void checkout(String foodLetter, int amount) {
         if (foodLetter.equals("c")) {
-            if (amount * COOKIE.getPrice() <= user.getBalance()) {
-                user.subBalance(amount * COOKIE.getPrice());
-                user.addFood(COOKIE, amount);
+            if (amount * Food.COOKIE.getPrice() <= user.getBalance()) {
+                user.subBalance(amount * Food.COOKIE.getPrice());
+                user.addFood(Food.COOKIE, amount);
             } else {
                 System.out.println("You do not have enough coins!");
             }
         } else if (foodLetter.equals("i")) {
-            if (amount * ICE_CREAM.getPrice() <= user.getBalance()) {
-                user.subBalance(amount * ICE_CREAM.getPrice());
-                user.addFood(ICE_CREAM, amount);
+            if (amount * Food.ICE_CREAM.getPrice() <= user.getBalance()) {
+                user.subBalance(amount * Food.ICE_CREAM.getPrice());
+                user.addFood(Food.ICE_CREAM, amount);
             } else {
                 System.out.println("You do not have enough coins!");
             }
         } else {
-            if (amount * MAC_N_CHEESE.getPrice() <= user.getBalance()) {
-                user.subBalance(amount * MAC_N_CHEESE.getPrice());
-                user.addFood(MAC_N_CHEESE, amount);
+            if (amount * Food.MAC_N_CHEESE.getPrice() <= user.getBalance()) {
+                user.subBalance(amount * Food.MAC_N_CHEESE.getPrice());
+                user.addFood(Food.MAC_N_CHEESE, amount);
             } else {
                 System.out.println("You do not have enough coins!");
             }
@@ -360,11 +356,16 @@ public class PetApp {
 
             System.out.print("Slot " + (i + 1) + ": ");
             if (f.getQuantity() != 0) {
-                System.out.println(f.getFood().getType() + " x " + f.getQuantity());
+                System.out.println(foodToString(f.getFood().getType()) + " x " + f.getQuantity());
             } else {
                 System.out.println(" empty ");
             }
         }
+    }
+
+    // EFFECTS : returns a given string made all lowercase, and removes underscores with spaces
+    private String foodToString(FoodType f) {
+        return f.toString().toLowerCase().replaceAll("_", " ");
     }
 
     // EFFECTS: saves the profile to file

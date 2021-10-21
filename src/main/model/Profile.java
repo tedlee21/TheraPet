@@ -9,12 +9,12 @@ import java.util.ArrayList;
 //represents user's profile with name and balance
 //Data persistence implementations based off JsonSerializationDemo file
 public class Profile implements Writable {
-    private String name;     //users name
-    private int balance;     //current balance of user
+    public static final Integer MAX_SIZE = 5;
+    public static final Slot EMPTY_SLOT = new Slot(new Food(FoodType.EMPTY, 0), 0);
+    private String name;                        //users name
+    private int balance;                        //current balance of user
     private ArrayList<Slot> storage;            //list of distinct types of Food
 
-    public static final Integer MAX_SIZE = 5;
-    public static final Slot EMPTY_SLOT = new Slot(new Food("empty", 0), 0);
 
     /*
      * REQUIRES: username has a non-zero length
@@ -69,6 +69,12 @@ public class Profile implements Writable {
             return storage.get(index);
         }
         return EMPTY_SLOT;
+    }
+
+    // REQUIRES: 0 <= slotNum < MAX_SIZE
+    // EFFECTS : sets index slotNum of storage as given slot
+    public void setSlot(Slot slot, int slotNum) {
+        storage.set(slotNum, slot);
     }
 
     // REQUIRES: amountFood > 0
@@ -130,7 +136,19 @@ public class Profile implements Writable {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("balance", balance);
+        json.put("storage", storageToJson());
         return json;
+    }
+
+    // EFFECTS: returns slots in user storage as a JSON array
+    private JSONArray storageToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Slot s : storage) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
     }
 
 

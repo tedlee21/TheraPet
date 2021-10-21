@@ -9,37 +9,31 @@ public class FoodTest {
 
     @Test
     public void makeFoodZero() {
-        food = new Food("Free Apple", -1);
+        food = new Food(FoodType.COOKIE, -1);
         assertEquals(0, food.getPrice());
     }
 
     @Test
     public void testGetFood() {
-        food = new Food("Apple", 5);
-        assertEquals("Apple", food.getType());
-    }
-
-    @Test
-    public void testGetFoodNumbers() {
-        food = new Food("25 Oranges", 10);
-        assertEquals("25 Oranges", food.getType());
+        food = new Food(FoodType.COOKIE, 5);
+        assertEquals(FoodType.COOKIE, food.getType());
     }
 
     @Test
     public void testGetPrice() {
-        food = new Food("Apple", 5);
+        food = new Food(FoodType.COOKIE, 5);
         assertEquals(5, food.getPrice());
     }
 
     @Test
     public void testGetPriceZero() {
-        food = new Food("FreeApple", 0);
+        food = new Food(FoodType.COOKIE, 0);
         assertEquals(0, food.getPrice());
     }
 
     @Test
     public void testGetPriceLot() {
-        food = new Food("ExpensiveApple", 1000);
+        food = new Food(FoodType.MAC_AND_CHEESE, 1000);
         assertEquals(1000, food.getPrice());
     }
 }

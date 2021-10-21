@@ -13,7 +13,7 @@ public class ProfileTest {
 
     @BeforeEach
     public void runBefore() {
-        food = new Food("Apple", 5);
+        food = new Food(FoodType.COOKIE, 5);
         bag = new Profile("test", 10);
     }
 
@@ -97,7 +97,7 @@ public class ProfileTest {
 
     @Test
     public void testReadSlotMultiple() {
-        food1 = new Food("Orange", 2);
+        food1 = new Food(FoodType.ICE_CREAM, 2);
         bag.addFood(food, 2);
         bag.addFood(food1, 1);
 
@@ -120,7 +120,7 @@ public class ProfileTest {
 
     @Test
     public void testAddNotFull() {
-        food1 = new Food("Orange", 1);
+        food1 = new Food(FoodType.ICE_CREAM, 1);
         bag.addFood(food, 1);
         assertFalse(bag.isEmpty());
 
@@ -133,10 +133,10 @@ public class ProfileTest {
     @Test
     public void testAddFull() {
         for (int i = 0; i < Profile.MAX_SIZE; i++) {
-            bag.addFood(new Food(("Apple " + i), 1), 1);
+            bag.addFood(new Food(FoodType.COOKIE, 1 + i), 1);
         }
 
-        food1 = new Food("Orange", 1);
+        food1 = new Food(FoodType.ICE_CREAM, 1);
         boolean bool1 = bag.addFood(food1, 1);
         assertFalse(bool1);
     }
@@ -147,7 +147,7 @@ public class ProfileTest {
             bag.addFood(food, 1);
         }
 
-        food1 = new Food("Orange", 1);
+        food1 = new Food(FoodType.ICE_CREAM, 1);
         boolean bool1 = bag.addFood(food1, 1);
         assertTrue(bool1);
     }
@@ -178,4 +178,14 @@ public class ProfileTest {
         assertTrue(bag.isEmpty());
     }
 
+    @Test
+    public void testSetSlot() {
+        bag.addFood(food, 2);
+        assertEquals(2, bag.readSlot(0).getQuantity());
+
+        Slot slot = new Slot(Food.ICE_CREAM, 1);
+        bag.setSlot(slot, 0);
+        assertEquals(1, bag.readSlot(0).getQuantity());
+
+    }
 }
