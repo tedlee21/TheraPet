@@ -4,15 +4,22 @@ import model.Food;
 import model.Inventory;
 import model.Pet;
 import model.Profile;
+import persistence.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 //Digital Pet Application        //Console interface code based off TellerApp file from 210 class
+                                 //Data persistence implementations based off JsonSerializationDemo file
 public class PetApp {
+    private static final String JSON_STORE = "./data/workroom.json";
     private Profile user;
     private Pet myPet;
     private Inventory bag;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     private static final Food COOKIE = new Food("Cookie", 2);
     private static final Food ICE_CREAM = new Food("Ice Cream", 5);
@@ -61,6 +68,10 @@ public class PetApp {
             printBag();
         } else if (command.equals("c")) {
             doBank();
+        } else if (command.equals("w")) {
+            saveProfile();
+        } else if (command.equals("l")) {
+            loadProfile();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -71,6 +82,8 @@ public class PetApp {
     private void setup() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         System.out.println("Hello! What's your name?");
         String name = input.next();
@@ -358,6 +371,29 @@ public class PetApp {
             } else {
                 System.out.println(" empty ");
             }
+        }
+    }
+
+    // EFFECTS: saves the profile to file
+    private void saveProfile() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(user);
+            jsonWriter.close();
+            System.out.println("Saved " + user.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads profile from file
+    private void loadProfile() {
+        try {
+            user = jsonReader.read();
+            System.out.println("Loaded " + user.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

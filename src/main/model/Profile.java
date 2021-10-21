@@ -1,7 +1,12 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 //represents user's profile with name and balance
-public class Profile {
+//Data persistence implementations based off JsonSerializationDemo file
+public class Profile implements Writable {
     private String name;     //users name
     private int balance;     //current balance of user
 
@@ -45,6 +50,13 @@ public class Profile {
         balance -= amount;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("balance", balance);
+        return json;
+    }
 
 
 
