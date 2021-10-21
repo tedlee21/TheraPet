@@ -45,5 +45,5 @@ to me in more ways than one.
 - As a user, I want to be able to view a nice message tailored to my mood
 - As a user, I want to be able to say goodbye to my pet and close the application
 
-- As a user, I want to be able to save the game from the main menu to file
-- As a user, I want to be able to load my game from file
+- As a user, I want to be able to save my entire game from the main menu to file
+- As a user, I want to be able to choose if I want to load my game from file, or start a new game
