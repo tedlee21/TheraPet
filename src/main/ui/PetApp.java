@@ -26,11 +26,10 @@ public class PetApp {
     // MODIFIES: this
     // EFFECTS : processes the users input
     private void runPet() {
-        boolean keepGoing = true;
-        String command = "";
+        String command;
 
         initSystems();
-        setup();
+        boolean keepGoing = startupOptions();
 
         while (keepGoing) {
             displayMainMenu();
@@ -39,13 +38,12 @@ public class PetApp {
 
             if (command.equals("q")) {
                 keepGoing = false;
+                petSays();
+                System.out.println("Goodbye for now " + user.getName() + "!");
             } else {
                 processCommand(command);
             }
         }
-
-        petSays();
-        System.out.println("Goodbye for now " + user.getName() + "!");
     }
 
     // MODIFIES: this
@@ -63,8 +61,6 @@ public class PetApp {
             doBank();
         } else if (command.equals("w")) {
             saveProfile();
-        } else if (command.equals("l")) {
-            loadProfile();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -77,6 +73,34 @@ public class PetApp {
         input.useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+    }
+
+    // MODIFIES: this
+    // EFFECTS : displays startup options for user
+    private boolean startupOptions() {
+        System.out.println("\tD I G I - P E T");
+        boolean keepGoing = true;
+        String command;
+        while (keepGoing) {
+            System.out.println("select: ");
+            System.out.println("\tn -> New Game");
+            System.out.println("\tl -> Load Game");
+            System.out.println("\tq -> Quit");
+            command = input.next();
+            command = command.toLowerCase();
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else if (command.equals("n")) {
+                setup();
+                return true;
+            } else if (command.equals("l")) {
+                loadProfile();
+                return true;
+            } else {
+                System.out.println("Selection not valid...");
+            }
+        }
+        return false;
     }
 
     // MODIFIES: this
@@ -99,6 +123,7 @@ public class PetApp {
         System.out.println("\ts -> Shop");
         System.out.println("\tb -> Bag");
         System.out.println("\tc -> Coin Bank");
+        System.out.println("\tw -> Save Game");
         System.out.println("\tq -> Quit");
     }
 
@@ -371,7 +396,7 @@ public class PetApp {
         return f.toString().toLowerCase().replaceAll("_", " ");
     }
 
-    // EFFECTS: saves the profile to file
+    // EFFECTS : saves the profile to file
     private void saveProfile() {
         try {
             jsonWriter.open();
@@ -384,11 +409,14 @@ public class PetApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads profile from file
+    // EFFECTS : loads profile from file
     private void loadProfile() {
         try {
             user = jsonReader.read();
             System.out.println("Loaded " + user.getName() + " from " + JSON_STORE);
+            System.out.println("\t. . .");
+            petSays();
+            System.out.println("OMG hi " + user.getName() + " I missed you! Welcome back!");
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
