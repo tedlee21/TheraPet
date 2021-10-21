@@ -1,9 +1,6 @@
 package persistence;
 
-import model.Food;
-import model.FoodType;
-import model.Profile;
-import model.Slot;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,7 +42,9 @@ public class JsonReader {
     // EFFECTS: parses profile from JSON object and returns it
     private Profile parseProfile(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        Profile pf = new Profile(name, jsonObject.getInt("balance"));
+        String petName = jsonObject.getString("petName");
+        PetType petType = PetType.valueOf(jsonObject.getString("petType"));
+        Profile pf = new Profile(name, jsonObject.getInt("balance"), petName, petType);
         addStorage(pf, jsonObject);
         return pf;
     }

@@ -11,8 +11,8 @@ import java.util.Scanner;
                                  //Data persistence implementations based off JsonSerializationDemo file
 public class PetApp {
     private static final String JSON_STORE = "./data/profile.json";
+    private static final Integer INITIAL_BAL = 50;
     private Profile user;
-    private Pet myPet;
     private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -29,6 +29,7 @@ public class PetApp {
         boolean keepGoing = true;
         String command = "";
 
+        initSystems();
         setup();
 
         while (keepGoing) {
@@ -70,22 +71,24 @@ public class PetApp {
     }
 
     // MODIFIES: this
-    // EFFECTS : initializes user Profile
-    private void setup() {
+    // EFFECTS : initializes systems
+    private void initSystems() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+    }
 
+    // MODIFIES: this
+    // EFFECTS : initializes user Profile
+    private void setup() {
         System.out.println("Hello! What's your name?");
         String name = input.next();
-        user = new Profile(name, 50);
-
-        System.out.println("Hi " + user.getName() + ", what type of pet would you like?");
+        System.out.println("Hi " + name + ", what type of pet would you like?");
         PetType petType = selectPetType();
         System.out.println("What would you like to name your " + petType.toString().toLowerCase() + "?");
         String petName = input.next();
-        myPet = new Pet(petName, petType);
+        user = new Profile(name, INITIAL_BAL, petName, petType);
     }
 
     // EFFECTS: displays main menu of options to user
@@ -161,7 +164,7 @@ public class PetApp {
 
     // EFFECTS : prompts user to play with pet and displays results
     private void doPlay() {
-        System.out.print("What would you like to do with " + myPet.getPetName() + "?");
+        System.out.print("What would you like to do with " + user.getPetName() + "?");
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("t") || selection.equals("p") || selection.equals("e") || selection.equals("b"))) {
@@ -188,21 +191,21 @@ public class PetApp {
     //           method ends if storage is empty; otherwise feeds pet 1 of the selected food,
     //           updates user storage, and displays updated storage and pets reaction
     private void doFeed() {
-        System.out.println(myPet.getPetName() + " is hungry!");
+        System.out.println(user.getPetName() + " is hungry!");
         if (user.isEmpty()) {
-            System.out.println("Your bag is empty! Go buy some food for " + myPet.getPetName() + "...");
+            System.out.println("Your bag is empty! Go buy some food for " + user.getPetName() + "...");
         } else {
             int slot = -1;
             //forces user to select valid slot
             while (!(slot > -1) || !(slot < Profile.MAX_SIZE) || (user.readSlot(slot).getQuantity() == 0)) {
                 printBag();
-                System.out.println("Enter the slot number of the food you want to feed " + myPet.getPetName() + ".");
+                System.out.println("Enter the slot number of the food you want to feed " + user.getPetName() + ".");
                 slot = input.nextInt() - 1;
             }
             Food eatenFood = user.readSlot(slot).getFood();
             user.removeFood(eatenFood, 1);
             printBag();
-            System.out.println(myPet.getPetName() + " really enjoyed the " + foodToString(eatenFood.getType()) + "!");
+            System.out.println(user.getPetName() + " really enjoyed the " + foodToString(eatenFood.getType()) + "!");
             petSays();
             System.out.println("Thanks " + user.getName() + "!! Yum, Yum!");
         }
@@ -263,24 +266,24 @@ public class PetApp {
 
     // EFFECTS : displays results of playing with a ball depending on user's pet type
     private void playBall() {
-        PetType type = myPet.getPetType();
+        PetType type = user.getPetType();
 
         if (type.equals(PetType.DOG)) {
             System.out.println("Ooh Ooh! Ball!! Throw it far for me!!");
-            System.out.println("*" + myPet.getPetName() + " runs for the ball and brings it back*");
+            System.out.println("*" + user.getPetName() + " runs for the ball and brings it back*");
             petSays();
             System.out.println("I got it!! I got it!!");
         } else if (type.equals(PetType.CAT)) {
             System.out.println("Hmmm a Ball?");
-            System.out.println("*" + myPet.getPetName() + " bats the ball back and forth*");
+            System.out.println("*" + user.getPetName() + " bats the ball back and forth*");
             petSays();
             System.out.println("Amusing.");
         } else if (type.equals(PetType.BIRD)) {
             System.out.println("I.. I don't know how to play with this!");
-            System.out.println("*" + myPet.getPetName() + " tries to roll the ball but falls over!*");
+            System.out.println("*" + user.getPetName() + " tries to roll the ball but falls over!*");
         } else {
             System.out.println("This ball is as big as I am!!");
-            System.out.println("*" + myPet.getPetName() + " curls up next to the ball*");
+            System.out.println("*" + user.getPetName() + " curls up next to the ball*");
             petSays();
             System.out.println("My new best friend! ..Other than you of course!!");
         }
@@ -340,7 +343,7 @@ public class PetApp {
     // EFFECTS : displays pets name and ":" to indicate following statement
     //           is said by the pet
     private void petSays() {
-        System.out.println(myPet.getPetName() + ": ");
+        System.out.println(user.getPetName() + ": ");
     }
 
     // EFFECTS: prints current user balance to the screen

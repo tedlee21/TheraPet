@@ -6,7 +6,7 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
-//represents user's profile with name and balance
+//represents user's profile with username, balance, storage, and pet
 //Data persistence implementations based off JsonSerializationDemo file
 public class Profile implements Writable {
     public static final Integer MAX_SIZE = 5;
@@ -14,15 +14,17 @@ public class Profile implements Writable {
     private String name;                        //users name
     private int balance;                        //current balance of user
     private ArrayList<Slot> storage;            //list of distinct types of Food
+    private String myPetName;                   //name of users pet
+    private PetType myPetType;                  //type of users pet
 
 
     /*
-     * REQUIRES: username has a non-zero length
-     * EFFECTS : name on profile is set to username;
+     * REQUIRES: username and petName has a non-zero length
+     * EFFECTS : name is set to username; myPetName is set to petName; myPetType is set to petType
      *           if initialBalance >= 0 then balance on account is set to    //this part of requires clause sourced
      *           initialBalance, otherwise balance is zero                   //from TellerApp
      */
-    public Profile(String username, int initialBalance) {
+    public Profile(String username, int initialBalance, String petName, PetType petType) {
         name = username;
 
         if (initialBalance >= 0) {          //if and else statement taken from TellerApp file
@@ -36,15 +38,25 @@ public class Profile implements Writable {
         for (int i = 0; i < MAX_SIZE; i++) {
             storage.add(EMPTY_SLOT);
         }
+
+        myPetName = petName;
+        myPetType = petType;
     }
 
     public String getName() {
         return name;
     }
 
-
     public int getBalance() {
         return balance;
+    }
+
+    public String getPetName() {
+        return myPetName;
+    }
+
+    public PetType getPetType() {
+        return myPetType;
     }
 
     // REQUIRES: amount >=0
@@ -136,6 +148,8 @@ public class Profile implements Writable {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("balance", balance);
+        json.put("petName", myPetName);
+        json.put("petType", myPetType);
         json.put("storage", storageToJson());
         return json;
     }
@@ -150,10 +164,6 @@ public class Profile implements Writable {
 
         return jsonArray;
     }
-
-
-
-
 
 
 }

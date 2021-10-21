@@ -14,69 +14,76 @@ public class ProfileTest {
     @BeforeEach
     public void runBefore() {
         food = new Food(FoodType.COOKIE, 5);
-        bag = new Profile("test", 10);
+        bag = new Profile("test", 10, "Rufus", PetType.DOG);
     }
 
     @Test
     public void makeUserZero() {
-        user = new Profile("Joe", -1);
+        user = new Profile("Joe", -1, "test", PetType.DOG);
         assertEquals(0, user.getBalance());
     }
 
     @Test
     public void testGetName() {
-        user = new Profile("Bob", 5);
-        assertEquals("Bob", user.getName());
+        assertEquals("test", bag.getName());
+        assertEquals("Rufus", bag.getPetName());
+    }
+
+    @Test
+    public void testGetType() {
+        assertEquals(PetType.DOG, bag.getPetType());
+        user = new Profile("Joe", 5, "test", PetType.CAT);
+        assertEquals(PetType.CAT, user.getPetType());
     }
 
     @Test
     public void testGetNameNumbers() {
-        user = new Profile("25th Bob", 5);
+        user = new Profile("25th Bob", 5, "test", PetType.DOG);
         assertEquals("25th Bob", user.getName());
     }
 
     @Test
     public void testGetBalance() {
-        user = new Profile("Joe", 5);
+        user = new Profile("Joe", 5, "test", PetType.DOG);
         assertEquals(5, user.getBalance());
     }
 
     @Test
     public void testGetBalanceZero() {
-        user = new Profile("Broke Joe", 0);
+        user = new Profile("Broke Joe", 0, "test", PetType.DOG);
         assertEquals(0, user.getBalance());
     }
 
     @Test
     public void testGetBalanceLot() {
-        user = new Profile("Stacked Joe", 10000);
+        user = new Profile("Stacked Joe", 10000, "test", PetType.DOG);
         assertEquals(10000, user.getBalance());
     }
 
     @Test
     public void testAddBal() {
-        user = new Profile("Joe", 5);
+        user = new Profile("Joe", 5, "test", PetType.DOG);
         user.addBalance(10);
         assertEquals(15, user.getBalance());
     }
 
     @Test
     public void testAddBalNone() {
-        user = new Profile("Joe", 5);
+        user = new Profile("Joe", 5, "test", PetType.DOG);
         user.addBalance(0);
         assertEquals(5, user.getBalance());
     }
 
     @Test
     public void testSubBal() {
-        user = new Profile("Joe", 10);
+        user = new Profile("Joe", 10, "test", PetType.DOG);
         user.subBalance(5);
         assertEquals(5, user.getBalance());
     }
 
     @Test
     public void testSubBalNone() {
-        user = new Profile("Joe", 10);
+        user = new Profile("Joe", 10, "test", PetType.DOG);
         user.subBalance(0);
         assertEquals(10, user.getBalance());
     }
