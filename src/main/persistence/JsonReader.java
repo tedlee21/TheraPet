@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // Represents a reader that reads profile from JSON data stored in file
-// Heavily based off JsonSerializationDemo file
+// Class heavily based off JsonSerializationDemo file
 public class JsonReader {
     private String source;
 

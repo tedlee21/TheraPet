@@ -1,0 +1,43 @@
+{
+    "petName": "Dog",
+    "balance": 20,
+    "petType": "DOG",
+    "name": "User",
+    "storage": [
+        {
+            "quantity": 5,
+            "food": {
+                "price": 2,
+                "type": "COOKIE"
+            }
+        },
+        {
+            "quantity": 2,
+            "food": {
+                "price": 5,
+                "type": "ICE_CREAM"
+            }
+        },
+        {
+            "quantity": 1,
+            "food": {
+                "price": 10,
+                "type": "MAC_AND_CHEESE"
+            }
+        },
+        {
+            "quantity": 0,
+            "food": {
+                "price": 0,
+                "type": "EMPTY"
+            }
+        },
+        {
+            "quantity": 0,
+            "food": {
+                "price": 0,
+                "type": "EMPTY"
+            }
+        }
+    ]
+}

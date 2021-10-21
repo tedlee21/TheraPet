@@ -3,7 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-// Represents a slot in a user's inventory.
+// Represents a slot in a user's inventory
+// Data persistence implementations based off JsonSerializationDemo file
 public class Slot implements Writable {
     private Food food;           //type of food stored in the slot
     private int quantity;        //amount of stored food in the slot

@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import persistence.JsonTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProfileTest {
@@ -27,6 +30,13 @@ public class ProfileTest {
     public void testGetName() {
         assertEquals("test", bag.getName());
         assertEquals("Rufus", bag.getPetName());
+    }
+
+    @Test
+    public void testGetSlots() {
+        List<Slot> storage = bag.getSlots();
+        assertEquals(5, storage.size());
+        assertTrue(bag.isEmpty());
     }
 
     @Test

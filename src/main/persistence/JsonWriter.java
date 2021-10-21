@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 // Represents a writer that writes JSON representation of profile to file
-// Heavily based off JsonSerializationDemo file
+// Class heavily based off JsonSerializationDemo file
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;

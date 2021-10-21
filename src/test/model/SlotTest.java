@@ -15,13 +15,13 @@ public class SlotTest {
     }
 
     @Test
-    public void invalidQuantity() {
+    public void testInvalidQuantity() {
         slot1 = new Slot(Food.ICE_CREAM, -1);
         assertEquals(0, slot1.getQuantity());
     }
 
     @Test
-    public void replaceSlot() {
+    public void testReplaceSlot() {
         slot1 = new Slot(Food.ICE_CREAM, 2);
         assertEquals(Food.COOKIE, slot.getFood());
         assertEquals(1, slot.getQuantity());
@@ -32,7 +32,7 @@ public class SlotTest {
     }
 
     @Test
-    public void addQuantity() {
+    public void testAddQuantity() {
         assertEquals(1, slot.getQuantity());
         slot.addQuantity(1);
         assertEquals(2, slot.getQuantity());
@@ -41,7 +41,7 @@ public class SlotTest {
     }
 
     @Test
-    public void subQuantity() {
+    public void testSubQuantity() {
         slot.addQuantity(10);
         assertEquals(11, slot.getQuantity());
         slot.subQuantity(5);

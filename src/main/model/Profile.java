@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 //represents user's profile with username, balance, storage, and pet
 //Data persistence implementations based off JsonSerializationDemo file
@@ -57,6 +59,11 @@ public class Profile implements Writable {
 
     public PetType getPetType() {
         return myPetType;
+    }
+
+    // EFFECTS: returns an unmodifiable list of thingies in this workroom
+    public List<Slot> getSlots() {
+        return Collections.unmodifiableList(storage);
     }
 
     // REQUIRES: amount >=0
