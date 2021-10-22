@@ -61,10 +61,13 @@ public class PetApp {
             doBank();
         } else if (command.equals("w")) {
             saveProfile();
+        } else if (command.equals("g")) {
+            new CasinoGame(user);
         } else {
             System.out.println("Selection not valid...");
         }
     }
+
 
     // MODIFIES: this
     // EFFECTS : initializes systems
@@ -122,6 +125,7 @@ public class PetApp {
         System.out.println("\tf -> Feed");
         System.out.println("\ts -> Shop");
         System.out.println("\tb -> Bag");
+        System.out.println("\tg -> Gamble");
         System.out.println("\tc -> Coin Bank");
         System.out.println("\tw -> Save Game");
         System.out.println("\tq -> Quit");
