@@ -76,12 +76,13 @@ public class CasinoGame {
     // EFFECTS : prompts user to play casino game
     private void doPlay() {
         String selection = "";  // force entry into loop
-        int multiplier = 0;
         int bet = getBet();
-
-        while (((user.getBalance() - (bet * multiplier)) < 0) || (multiplier < 1)) {
-            System.out.println("\nWhat would you like the multiplier to be?");
-            multiplier = input.nextInt();
+        if (bet == -1) {
+            return;
+        }
+        int multiplier = getMultiplier(bet);
+        if (multiplier == -1) {
+            return;
         }
         while (!(selection.equals("t") || selection.equals("h"))) {
             displayPlayChoices();
@@ -99,15 +100,35 @@ public class CasinoGame {
         printBalance();
     }
 
-    // EFFECTS : prompts user for their bet and returns it
+    // EFFECTS : prompts user for their bet and returns it; if bet is 0, returns -1
     private Integer getBet() {
-        int bet = 0;
-        while (!((user.getBalance() - bet) > 0) || !(bet > 0)) {
+        int bet = -1;
+        while (!((user.getBalance() - bet) >= 0) || !(bet > 0)) {
             printBalance();
             System.out.println("\nHow much would you like to bet?");
+            System.out.println("(Remember, your bet should not be more coins than you have!)");
             bet = input.nextInt();
+            if (bet == 0) {
+                System.out.println("Cannot bet 0 coins!");
+                return -1;
+            }
         }
         return bet;
+    }
+
+    // EFFECTS : prompts user for their desired multiplier and returns it; if multiplier is 0, returns -1
+    private Integer getMultiplier(int bet) {
+        int multiplier = -1;
+        while (((user.getBalance() - (bet * multiplier)) < 0) || (multiplier < 0)) {
+            System.out.println("\nWhat would you like the multiplier to be?");
+            System.out.println("(Remember, your multiplier should not make your bet more coins than you have!)");
+            multiplier = input.nextInt();
+            if (multiplier == 0) {
+                System.out.println("Cannot have multiplier of 0!");
+                return -1;
+            }
+        }
+        return multiplier;
     }
 
     // EFFECTS: prints out user balance
