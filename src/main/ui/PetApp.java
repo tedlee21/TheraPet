@@ -265,31 +265,29 @@ public class PetApp {
     }
 
     // MODIFIES: this
-    // EFFECTS : prompts user to choose if a loan is wanted; if yes, 20 coins
-    //           are added to the users balance and updated balance is displayed;
+    // EFFECTS : prompts user to choose if they want a loan, or pay back debt;
+    //           if loan is selected, 20 coins are added to the users balance and
+    //           updated balance is displayed; if pay back debt is selected, user is
+    //           prompted to enter how many coins to pay back, and balance and debt are updated;
     //           else, balance remains the same and is displayed
     private void doBank() {
         System.out.println("Welcome to the Coin Bank!");
         printBalance();
+        printDebt();
 
         String answer = "";   // force entry into loop
 
-        while (!(answer.equals("y") || answer.equals("n"))) {
-            System.out.println("Are you in need of a Loan, " + user.getName() + "?");
-            System.out.println("\ty -> yes");
-            System.out.println("\tn -> no");
+        while (!(answer.equals("t") || answer.equals("p") || answer.equals("l"))) {
+            System.out.println("\nWhat would you like to do, " + user.getName() + "?");
+            System.out.println("\tt -> Take out a loan");
+            System.out.println("\tp -> Pay back debt");
+            System.out.println("\tl -> Leave bank");
             answer = input.next();
             answer = answer.toLowerCase();
         }
-
-        if (answer.equals("y")) {
-            System.out.println("Well, alright then, here's a little something to get you going.");
-            user.addBalance(20);
-            System.out.println("20 coins were added to your wallet!");
-        } else {
-            System.out.println("Alright then, you better be going now.");
-        }
+        doBankTransaction(answer);
         printBalance();
+        System.out.println("\nSee you next time!");
     }
 
 
@@ -348,6 +346,34 @@ public class PetApp {
         doShop();
     }
 
+    // MODIFIES: this
+    // EFFECTS : performs requested bank transaction and displays updated user stats
+    private void doBankTransaction(String answer) {
+        if (answer.equals("t")) {
+            System.out.println("Well, alright then, here's a little something to get you going.");
+            user.addBalance(20);
+            System.out.println("\n20 coins were added to your wallet!");
+            user.setDebt(user.getDebt() + 20);
+            System.out.println("You now owe: " + user.getDebt() + " coins.");
+        } else if (answer.equals("p")) {
+            if (user.getDebt() == 0) {
+                System.out.println("You have no debt to pay back!");
+            } else if (user.getBalance() == 0) {
+                System.out.println("You have no coins to pay back your debt with!");
+            } else {
+                int count = 0;
+                while (!(count > 0) || !(user.getDebt() - count >= 0) || (count > user.getBalance())) {
+                    System.out.println("How many coins would you like to pay back?");
+                    printBalance();
+                    count = input.nextInt();
+                }
+                user.setDebt(user.getDebt() - count);
+                user.subBalance(count);
+                System.out.println("You now owe: " + user.getDebt() + " coins.");
+            }
+        }
+    }
+
     // EFFECTS: prompts user to select type of pet and returns it as a String
     private PetType selectPetType() {
         String selection = "";  // force entry into loop
@@ -378,6 +404,11 @@ public class PetApp {
     // EFFECTS: prints current user balance to the screen
     private void printBalance() {
         System.out.println("You have: " + user.getBalance() + " coins.");
+    }
+
+    // EFFECTS: prints current user debt to the screen
+    private void printDebt() {
+        System.out.println("You owe: " + user.getDebt() + " coins.");
     }
 
     // EFFECTS: prints out contents of user storage; If the storage slot is empty, prints "empty"

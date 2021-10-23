@@ -18,6 +18,7 @@ public class Profile implements Writable {
     private ArrayList<Slot> storage;            //list of distinct types of Food
     private String myPetName;                   //name of users pet
     private PetType myPetType;                  //type of users pet
+    private int debt;
 
 
     /*
@@ -43,6 +44,8 @@ public class Profile implements Writable {
 
         myPetName = petName;
         myPetType = petType;
+
+        debt = 0;
     }
 
     public String getName() {
@@ -59,6 +62,10 @@ public class Profile implements Writable {
 
     public PetType getPetType() {
         return myPetType;
+    }
+
+    public Integer getDebt() {
+        return debt;
     }
 
     // EFFECTS: returns an unmodifiable list of thingies in this workroom
@@ -78,6 +85,13 @@ public class Profile implements Writable {
     // EFFECTS : subtracts amount from balance
     public void subBalance(int amount) {
         balance -= amount;
+    }
+
+    // REQUIRES: amount >=0
+    // MODIFIES: this
+    // EFFECTS : sets debt to amount
+    public void setDebt(int amount) {
+        debt = amount;
     }
 
     // REQUIRES: valid list index number
@@ -157,6 +171,7 @@ public class Profile implements Writable {
         json.put("balance", balance);
         json.put("petName", myPetName);
         json.put("petType", myPetType);
+        json.put("debt", debt);
         json.put("storage", storageToJson());
         return json;
     }

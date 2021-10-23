@@ -28,6 +28,7 @@ public class JsonWriterTest extends JsonTest{
     void testWriterEmptyWorkroom() {
         try {
             Profile pf = new Profile("User", 0, "Dog", PetType.DOG);
+            pf.setDebt(0);
             JsonWriter writer = new JsonWriter("./data/testWriterBrokeProfile.json");
             writer.open();
             writer.write(pf);
@@ -37,6 +38,7 @@ public class JsonWriterTest extends JsonTest{
             pf = reader.read();
             assertEquals("User", pf.getName());
             assertEquals(0, pf.getBalance());
+            assertEquals(0, pf.getDebt());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -49,6 +51,7 @@ public class JsonWriterTest extends JsonTest{
             pf.addFood(Food.COOKIE, 5);
             pf.addFood(Food.ICE_CREAM, 2);
             pf.addFood(Food.MAC_N_CHEESE, 1);
+            pf.setDebt(20);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralProfile.json");
             writer.open();
             writer.write(pf);
@@ -60,6 +63,7 @@ public class JsonWriterTest extends JsonTest{
             assertEquals(20, pf.getBalance());
             assertEquals(PetType.DOG, pf.getPetType());
             assertEquals("Dog", pf.getPetName());
+            assertEquals(20, pf.getDebt());
             List<Slot> storage = pf.getSlots();
             assertEquals(5, storage.size());
             checkSlot(FoodType.COOKIE, 2, 5, storage.get(0));
