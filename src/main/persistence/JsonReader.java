@@ -44,9 +44,7 @@ public class JsonReader {
         String name = jsonObject.getString("name");
         String petName = jsonObject.getString("petName");
         PetType petType = PetType.valueOf(jsonObject.getString("petType"));
-        int debt = jsonObject.getInt("debt");
         Profile pf = new Profile(name, jsonObject.getInt("balance"), petName, petType);
-        pf.setDebt(debt);
         addStorage(pf, jsonObject);
         return pf;
     }
@@ -67,7 +65,7 @@ public class JsonReader {
     // EFFECTS: parses slot from JSON object and adds it to profile
     private void addSlot(Profile pf, JSONObject jsonObject, int count) {
         JSONObject f = jsonObject.getJSONObject("food");
-        int amount = jsonObject.getInt("quantity");
+        Integer amount = jsonObject.getInt("quantity");
         addFood(pf, f, amount, count);
     }
 
@@ -75,7 +73,7 @@ public class JsonReader {
     // EFFECTS : parses food from JSON object and adds it to profile
     private void addFood(Profile pf, JSONObject jsonObject, int amount, int count) {
         FoodType type = FoodType.valueOf(jsonObject.getString("type"));
-        int price = jsonObject.getInt("price");
+        Integer price = jsonObject.getInt("price");
 
         Food food = new Food(type, price);
 

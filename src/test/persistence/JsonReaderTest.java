@@ -33,7 +33,6 @@ public class JsonReaderTest extends JsonTest{
             Profile pf = reader.read();
             assertEquals("User", pf.getName());
             assertEquals(0, pf.getBalance());
-            assertEquals(0, pf.getDebt());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -48,7 +47,6 @@ public class JsonReaderTest extends JsonTest{
             assertEquals(20, pf.getBalance());
             assertEquals(PetType.DOG, pf.getPetType());
             assertEquals("Dog", pf.getPetName());
-            assertEquals(20, pf.getDebt());
             List<Slot> storage = pf.getSlots();
             assertEquals(5, storage.size());
             checkSlot(FoodType.COOKIE, 2, 5, storage.get(0));

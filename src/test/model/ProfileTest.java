@@ -205,11 +205,4 @@ public class ProfileTest {
         assertEquals(1, bag.readSlot(0).getQuantity());
 
     }
-
-    @Test
-    public void testSetDebt() {
-        assertEquals(0, bag.getDebt());
-        bag.setDebt(20);
-        assertEquals(20, bag.getDebt());
-    }
 }
