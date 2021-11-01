@@ -31,7 +31,7 @@ to me in more ways than one.
 
 ## User Stories
 
-- As a user, I want to be able to set my name to my profile
+- As a user, I want to be able to set my name and balance to my profile
 - As a user, I want to be able to select the type of pet I want
 - As a user, I want to be able to name my pet
 - As a user, I want to be able to navigate between menus of what I want to do with my pet
@@ -43,7 +43,6 @@ to me in more ways than one.
 - As a user, I want to be able to view feedback messages based on my actions
 - As a user, I want to be able to select what mood I am in when prompted by my pet
 - As a user, I want to be able to view a nice message tailored to my mood
-- As a user, I want to be able to play a heads or tails game to gamble my coins.
 - As a user, I want to be able to say goodbye to my pet and close the application
 
 - As a user, I want to be able to save my entire game from the main menu to file
