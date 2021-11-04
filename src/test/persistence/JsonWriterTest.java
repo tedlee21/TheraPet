@@ -48,7 +48,7 @@ public class JsonWriterTest extends JsonTest{
             Profile pf = new Profile("User", 20, "Dog", PetType.DOG);
             pf.addFood(Food.COOKIE, 5);
             pf.addFood(Food.ICE_CREAM, 2);
-            pf.addFood(Food.MAC_N_CHEESE, 1);
+            pf.addFood(Food.PIZZA, 1);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralProfile.json");
             writer.open();
             writer.write(pf);
@@ -64,7 +64,7 @@ public class JsonWriterTest extends JsonTest{
             assertEquals(5, storage.size());
             checkSlot(FoodType.COOKIE, 2, 5, storage.get(0));
             checkSlot(FoodType.ICE_CREAM, 5, 2, storage.get(1));
-            checkSlot(FoodType.MAC_AND_CHEESE, 10, 1, storage.get(2));
+            checkSlot(FoodType.PIZZA, 10, 1, storage.get(2));
             checkSlot(FoodType.EMPTY, 0, 0, storage.get(3));
             checkSlot(FoodType.EMPTY, 0, 0, storage.get(4));
 

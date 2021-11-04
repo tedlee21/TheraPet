@@ -7,9 +7,9 @@ import persistence.Writable;
 // a set price, store in Inventory, and feed to a Pet
 // Data persistence implementations based off JsonSerializationDemo file
 public class Food implements Writable {
-    public static final Food COOKIE = new Food(FoodType.COOKIE, 2);
-    public static final Food ICE_CREAM = new Food(FoodType.ICE_CREAM, 5);
-    public static final Food MAC_N_CHEESE = new Food(FoodType.MAC_AND_CHEESE, 10);
+    public static final Food COOKIE = new Food(FoodType.COOKIE, 10);
+    public static final Food ICE_CREAM = new Food(FoodType.ICE_CREAM, 20);
+    public static final Food PIZZA = new Food(FoodType.PIZZA, 40);
     private FoodType type;      //type of the Food ie, Apple
     private int price;        //price of the food for user to purchase
 

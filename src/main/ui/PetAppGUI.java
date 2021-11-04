@@ -19,55 +19,57 @@ public class PetAppGUI extends JFrame {
     protected static final int WIDTH = 800;
     protected static final int HEIGHT = 500;
     protected static final String JSON_STORE = "./data/profile.json";
-    private static final Integer INITIAL_BAL = 50;
-    private Profile user;
+    protected Profile user;
     private Scanner input;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    protected JsonWriter jsonWriter;
 
+    protected PetPanel petPanel;
     private PlayPanel playPanel;
     private BagPanel bagPanel;
-    private DialoguePanel textPanel;
-    private ShopPanel leftPanel;
+    protected DialoguePanel textPanel;
+    protected ShopPanel leftPanel;
 
     // EFFECTS : initializes the digital pet application GUI
-    public PetAppGUI(boolean load) {
-        initSystems(load);
-        runPetGUI();
+    public PetAppGUI(Profile user, boolean loaded) {
+        this.user = user;
+        initSystems();
+        runPetGUI(loaded);
     }
 
-    // EFFECTS : sets up play panel, shop panel, dialogue panel, and user's bag to be
-    //           displayed on window
-    private void runPetGUI() {
+    // EFFECTS : sets up pet panel, play panel, shop panel, dialogue panel,
+    //           and user's bag to be displayed on window
+    private void runPetGUI(boolean load) {
         setLayout(new BorderLayout());
         addMouseListener(new DesktopFocusAction());
-        playPanel = new PlayPanel();
-        bagPanel = new BagPanel();
-        leftPanel = new ShopPanel(user);
-        textPanel = new DialoguePanel(jsonWriter, leftPanel);
+        petPanel = new PetPanel(user);
+        textPanel = new DialoguePanel(this);
+        playPanel = new PlayPanel(this);
+        bagPanel = new BagPanel(user, textPanel);
+        leftPanel = new ShopPanel(bagPanel);
         add(playPanel, BorderLayout.NORTH);
         add(bagPanel, BorderLayout.EAST);
         add(textPanel, BorderLayout.SOUTH);
         add(leftPanel, BorderLayout.WEST);
+        add(petPanel, BorderLayout.CENTER);
 
         setTitle("Digital Pet");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreOnScreen();
         setVisible(true);
+        if (load) {
+            textPanel.textLog.setText("OMG hi " + user.getName() + " I missed you! Welcome back!");
+        } else {
+            textPanel.textLog.setText("Hello " + user.getName() + ".. Nice to meet you!");
+        }
     }
 
     // MODIFIES: this
-    // EFFECTS : initializes systems and loads profile if required
-    private void initSystems(boolean load) {
+    // EFFECTS : initializes systems
+    private void initSystems() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
-
-        if (load) {
-            loadProfile();
-        }
     }
 
     /**
@@ -88,16 +90,5 @@ public class PetAppGUI extends JFrame {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
-    }
-
-    // MODIFIES: this
-    // EFFECTS : loads user profile from file
-    private void loadProfile() {
-        try {
-            user = jsonReader.read();
-            System.out.println("Loaded " + user.getName() + " from " + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
-        }
     }
 }

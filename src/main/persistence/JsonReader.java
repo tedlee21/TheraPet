@@ -81,8 +81,8 @@ public class JsonReader {
             food = Food.COOKIE;                             //JSON save as already defined instances of the same type;
         } else if (type.equals(FoodType.ICE_CREAM)) {       //this prevents same foods treated as separate objects
             food = Food.ICE_CREAM;
-        } else if (type.equals(FoodType.MAC_AND_CHEESE)) {
-            food = Food.MAC_N_CHEESE;
+        } else if (type.equals(FoodType.PIZZA)) {
+            food = Food.PIZZA;
         }
         Slot slot = new Slot(food, amount);
         pf.setSlot(slot, count);

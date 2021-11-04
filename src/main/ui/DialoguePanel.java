@@ -1,9 +1,12 @@
 package ui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import model.Profile;
 import persistence.JsonWriter;
@@ -13,16 +16,17 @@ public class DialoguePanel extends JPanel {
     private static final Integer HEIGHT = 120;      //Height of the main panel
     private Profile user;                           //main user profile
     private JsonWriter jsonWriter;
-    private ShopPanel coinCount;
+    protected JTextArea textLog;
+    private PetAppGUI main;
 
     // REQUIRES: mainJsonWriter and leftPanel have been instantiated
-    // EFFECTS : jsonWriter is set to mainJsonWriter, coinCount is set to leftPanel, user is set to
-    //           leftPanel.user; sets up main JPanel for which dialogue, the save button, and the
+    // EFFECTS : jsonWriter is set to mainImport.JsonWriter, main is set to mainImport, user is set
+    //           to main.user; sets up main JPanel for which dialogue, the save button, and the
     //           coin button will appear; layout is set to BorderLayout and preferred size is set
-    public DialoguePanel(JsonWriter mainJsonWriter, ShopPanel leftPanel) {
-        this.jsonWriter = mainJsonWriter;
-        this.coinCount = leftPanel;
-        this.user = leftPanel.user;
+    public DialoguePanel(PetAppGUI mainImport) {
+        this.jsonWriter = mainImport.jsonWriter;
+        this.main = mainImport;
+        this.user = main.user;
         setLayout(new BorderLayout());
         Dimension size = new Dimension();
         size.height = HEIGHT;
@@ -41,7 +45,9 @@ public class DialoguePanel extends JPanel {
         Dimension panelSize = new Dimension();
         panelSize.width = (PetAppGUI.WIDTH - BagPanel.WIDTH);
         textPanel.setPreferredSize(panelSize);
-        textPanel.setBorder(BorderFactory.createTitledBorder("Text"));
+        textPanel.setBorder(BorderFactory.createTitledBorder(user.getPetName() + ": "));
+        textLog = new JTextArea();
+        textPanel.add(textLog);
 
         add(textPanel, BorderLayout.WEST);
     }
@@ -80,8 +86,6 @@ public class DialoguePanel extends JPanel {
      */
     private class CoinAction extends AbstractAction {
 
-        private JLabel coins;
-
         CoinAction() {
             super("Earn Coins");
         }
@@ -89,7 +93,7 @@ public class DialoguePanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             user.addBalance(1);
-            coinCount.coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
+            main.leftPanel.coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
         }
     }
 

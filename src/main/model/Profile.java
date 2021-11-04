@@ -11,7 +11,7 @@ import java.util.List;
 //represents user's profile with username, balance, storage, and pet
 //Data persistence implementations based off JsonSerializationDemo file
 public class Profile implements Writable {
-    public static final Integer MAX_SIZE = 5;
+    public static final Integer MAX_SIZE = 6;
     public static final Slot EMPTY_SLOT = new Slot(new Food(FoodType.EMPTY, 0), 0);
     private String name;                        //users name
     private int balance;                        //current balance of user
@@ -88,6 +88,17 @@ public class Profile implements Writable {
             return storage.get(index);
         }
         return EMPTY_SLOT;
+    }
+
+    // EFFECTS : returns index number of food found in storage slot;
+    //           returns -1 if not found
+    public Integer findFood(Food food) {
+        for (int i = 0; i < MAX_SIZE; i++) {
+            if (storage.get(i).getFood() == food) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     // REQUIRES: 0 <= slotNum < MAX_SIZE

@@ -33,7 +33,7 @@ public class FoodTest {
 
     @Test
     public void testGetPriceLot() {
-        food = new Food(FoodType.MAC_AND_CHEESE, 1000);
+        food = new Food(FoodType.PIZZA, 1000);
         assertEquals(1000, food.getPrice());
     }
 }

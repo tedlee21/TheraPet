@@ -159,7 +159,7 @@ public class PetApp {
         System.out.println("\nWe have:");
         System.out.println("\tc -> Cookies, " + Food.COOKIE.getPrice() + " coins each");
         System.out.println("\ti -> Ice Cream, " + Food.ICE_CREAM.getPrice() + " coins each");
-        System.out.println("\tm -> Mac and Cheese, " + Food.MAC_N_CHEESE.getPrice() + " coins each");
+        System.out.println("\tm -> Mac and Cheese, " + Food.PIZZA.getPrice() + " coins each");
         System.out.println("\tl -> leave Shop");
     }
 
@@ -334,9 +334,9 @@ public class PetApp {
                 System.out.println("You do not have enough coins!");
             }
         } else {
-            if (amount * Food.MAC_N_CHEESE.getPrice() <= user.getBalance()) {
-                user.subBalance(amount * Food.MAC_N_CHEESE.getPrice());
-                user.addFood(Food.MAC_N_CHEESE, amount);
+            if (amount * Food.PIZZA.getPrice() <= user.getBalance()) {
+                user.subBalance(amount * Food.PIZZA.getPrice());
+                user.addFood(Food.PIZZA, amount);
             } else {
                 System.out.println("You do not have enough coins!");
             }
