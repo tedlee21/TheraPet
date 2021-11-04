@@ -35,8 +35,16 @@ public class ProfileTest {
     @Test
     public void testGetSlots() {
         List<Slot> storage = bag.getSlots();
-        assertEquals(5, storage.size());
+        assertEquals(6, storage.size());
         assertTrue(bag.isEmpty());
+    }
+
+    @Test
+    public void testFindFood() {
+        assertTrue(bag.isEmpty());
+        assertEquals(-1, bag.findFood(food));
+        bag.addFood(food, 1);
+        assertEquals(0, bag.findFood(food));
     }
 
     @Test
