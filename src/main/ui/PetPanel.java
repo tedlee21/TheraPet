@@ -11,6 +11,7 @@ import java.io.IOException;
 // Represents a JPanel displaying the users pet
 public class PetPanel extends JPanel {
     private Profile user;
+    protected JLabel picture;
 
     // REQUIRES: mainUser must be instantiated
     // EFFECTS : user is set to mainUser; layout is set to BorderLayout;
@@ -29,10 +30,10 @@ public class PetPanel extends JPanel {
         try {
             Image img = ImageIO.read(new File("resources/"
                     + user.getPetType().toString().toLowerCase()
-                    + ".png"));
+                    + "/pet.png"));
             Image scaledImg = img.getScaledInstance(250,250, Image.SCALE_REPLICATE);
-            JLabel picture = new JLabel(new ImageIcon(scaledImg));
-            add(picture);
+            picture = new JLabel(new ImageIcon(scaledImg));
+            add(picture, BorderLayout.CENTER);
         } catch (IOException e) {
             e.printStackTrace();
         }

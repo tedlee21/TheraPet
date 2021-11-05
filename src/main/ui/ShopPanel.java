@@ -12,6 +12,7 @@ import model.*;
 // Represents a JPanel displaying a user's name and balance, along with the shop to buy food from
 public class ShopPanel extends JPanel {
     private static final Integer WIDTH = 170;       //Width of the main panel
+    private PetAppGUI main;                         //main GUI for access to other panels and user
     protected Profile user;                         //main user profile
     protected JTextArea coins;                      //JTextArea displaying user's name and balance
     protected BagPanel slots;                       //JPanel to access bag slot buttons
@@ -20,9 +21,10 @@ public class ShopPanel extends JPanel {
     // EFFECTS : user is set to bagPanel.user; layout is set to GridLayout and preferred size is set;
     //           Border is titled to reflect panel function; Stats panel is added, and Shop items
     //           are added
-    public ShopPanel(BagPanel bagPanel) {
-        this.user = bagPanel.user;
-        this.slots = bagPanel;
+    public ShopPanel(PetAppGUI mainImport) {
+        this.main = mainImport;
+        this.user = main.user;
+        this.slots = main.bagPanel;
         setLayout(new GridLayout(4, 1));
         Dimension size = new Dimension();
         size.width = WIDTH;
@@ -59,7 +61,7 @@ public class ShopPanel extends JPanel {
         foodButton.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
         try {
-            Image img = ImageIO.read(new File("resources/" + foodToString(food.getType()) + ".png"));
+            Image img = ImageIO.read(new File("resources/" + main.foodToString(food.getType()) + ".png"));
             Image scaledImg = img.getScaledInstance(70,70, Image.SCALE_REPLICATE);
             foodButton.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
@@ -128,17 +130,12 @@ public class ShopPanel extends JPanel {
     private void updateMapping(JButton button, Food food) {
         button.setAction(new FeedFoodAction(food));
         try {
-            Image img = ImageIO.read(new File("resources/" + foodToString(food.getType()) + ".png"));
+            Image img = ImageIO.read(new File("resources/" + main.foodToString(food.getType()) + ".png"));
             Image scaledImg = img.getScaledInstance(60,60, Image.SCALE_SMOOTH);
             button.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // EFFECTS : returns a given string made all lowercase, and removes underscores with spaces
-    private String foodToString(FoodType f) {
-        return f.toString().toLowerCase().replaceAll("_", " ");
     }
 
 
@@ -160,8 +157,9 @@ public class ShopPanel extends JPanel {
         public void actionPerformed(ActionEvent evt) {
             if (food.getType() != FoodType.EMPTY) {
                 user.removeFood(food, 1);
+                main.updatePetIconFood(food);
                 slots.textLog.textLog.setText("Thanks for the "
-                        + foodToString(food.getType())
+                        + main.foodToString(food.getType())
                         + ", "
                         + user.getName() + "!! Yum, Yum!");
                 if (user.findFood(food) != -1) {
@@ -170,12 +168,6 @@ public class ShopPanel extends JPanel {
                     updateEmptySlots();
                 }
             }
-//            } else {
-//                JOptionPane.showMessageDialog(null,
-//                        "please report this bug",
-//                        "Exception",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
         }
     }
 
@@ -207,6 +199,6 @@ public class ShopPanel extends JPanel {
     private void emptySlot(JButton button) {
         button.setText("");
         button.setIcon(null);
-        button.setActionCommand(null);
+        button.setAction(null);
     }
 }

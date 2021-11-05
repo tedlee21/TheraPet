@@ -1,14 +1,16 @@
 package ui;
 
+import model.Food;
+import model.FoodType;
 import model.Profile;
-import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -25,7 +27,7 @@ public class PetAppGUI extends JFrame {
 
     protected PetPanel petPanel;
     private PlayPanel playPanel;
-    private BagPanel bagPanel;
+    protected BagPanel bagPanel;
     protected DialoguePanel textPanel;
     protected ShopPanel leftPanel;
 
@@ -44,8 +46,8 @@ public class PetAppGUI extends JFrame {
         petPanel = new PetPanel(user);
         textPanel = new DialoguePanel(this);
         playPanel = new PlayPanel(this);
-        bagPanel = new BagPanel(user, textPanel);
-        leftPanel = new ShopPanel(bagPanel);
+        bagPanel = new BagPanel(this);
+        leftPanel = new ShopPanel(this);
         add(playPanel, BorderLayout.NORTH);
         add(bagPanel, BorderLayout.EAST);
         add(textPanel, BorderLayout.SOUTH);
@@ -91,4 +93,50 @@ public class PetAppGUI extends JFrame {
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
+
+    protected void updatePetIcon() {
+        try {
+            Image img = ImageIO.read(new File("resources/"
+                    + user.getPetType().toString().toLowerCase()
+                    + "/pet.png"));
+            Image scaledImg = img.getScaledInstance(250,250, Image.SCALE_REPLICATE);
+            petPanel.picture.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void updatePetIconHappy() {
+        try {
+            Image img = ImageIO.read(new File("resources/"
+                    + user.getPetType().toString().toLowerCase()
+                    + "/"
+                    + "happy.png"));
+            Image scaledImg = img.getScaledInstance(250,250, Image.SCALE_REPLICATE);
+            petPanel.picture.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void updatePetIconFood(Food food) {
+        String foodString = foodToString(food.getType());
+        try {
+            Image img = ImageIO.read(new File("resources/"
+                    + user.getPetType().toString().toLowerCase()
+                    + "/"
+                    + foodString
+                    + " feed.png"));
+            Image scaledImg = img.getScaledInstance(250,250, Image.SCALE_REPLICATE);
+            petPanel.picture.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // EFFECTS : returns a given string made all lowercase, and removes underscores with spaces
+    protected String foodToString(FoodType f) {
+        return f.toString().toLowerCase().replaceAll("_", " ");
+    }
+
 }

@@ -14,10 +14,11 @@ import persistence.JsonWriter;
 // Represents a JPanel for which dialogue, the save button, and the coin button will be
 public class DialoguePanel extends JPanel {
     private static final Integer HEIGHT = 120;      //Height of the main panel
+    private PetAppGUI main;                         //main GUI for access to other panels and user
     private Profile user;                           //main user profile
     private JsonWriter jsonWriter;
     protected JTextArea textLog;
-    private PetAppGUI main;
+
 
     // REQUIRES: mainJsonWriter and leftPanel have been instantiated
     // EFFECTS : jsonWriter is set to mainImport.JsonWriter, main is set to mainImport, user is set
@@ -92,6 +93,7 @@ public class DialoguePanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            main.updatePetIcon();
             user.addBalance(1);
             main.leftPanel.coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
         }

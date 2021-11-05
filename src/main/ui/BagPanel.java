@@ -12,6 +12,7 @@ import java.io.IOException;
 // Represents a JPanel that will display user's inventory from which they may feed the pet from
 public class BagPanel extends JPanel {
     protected static final Integer WIDTH = 250;     //Width of the main panel
+    private PetAppGUI main;                         //main GUI for access to other panels and user
     protected Profile user;                         //main user profile
     protected JButton slotButton1;
     protected JButton slotButton2;
@@ -22,12 +23,14 @@ public class BagPanel extends JPanel {
     protected DialoguePanel textLog;                //DialoguePanel to access pet text field
 
 
-    // EFFECTS: user is set to mainUser; layout is set to GridLayout and preferred size is set;
-    //          textLog is set to text; Border is titled to reflect
+    // EFFECTS: main is set to mainImport; user is set to main.user;
+    //          layout is set to GridLayout and preferred size is set;
+    //          textLog is set to main.textPanel; Border is titled to reflect
     //          panel function; buttons are added to panel
-    public BagPanel(Profile mainUser, DialoguePanel text) {
-        this.user = mainUser;
-        this.textLog = text;
+    public BagPanel(PetAppGUI mainImport) {
+        this.main = mainImport;
+        this.user = main.user;
+        this.textLog = main.textPanel;
         setLayout(new GridLayout(2, 3));
         Dimension size = new Dimension();
         size.width = WIDTH;
@@ -65,7 +68,7 @@ public class BagPanel extends JPanel {
 
         if (food.getType() != FoodType.EMPTY) {
             try {
-                Image img = ImageIO.read(new File("resources/" + foodToString(food.getType()) + ".png"));
+                Image img = ImageIO.read(new File("resources/" + main.foodToString(food.getType()) + ".png"));
                 Image scaledImg = img.getScaledInstance(60,60, Image.SCALE_REPLICATE);
                 slotButton.setIcon(new ImageIcon(scaledImg));
             } catch (IOException e) {
@@ -92,8 +95,9 @@ public class BagPanel extends JPanel {
         public void actionPerformed(ActionEvent evt) {
             if (food.getType() != FoodType.EMPTY) {
                 user.removeFood(food, 1);
+                main.updatePetIconFood(food);
                 textLog.textLog.setText("Thanks for the "
-                        + foodToString(food.getType())
+                        + main.foodToString(food.getType())
                         + ", "
                         + user.getName() + "!! Yum, Yum!");
                 if (user.findFood(food) != -1) {
@@ -159,11 +163,6 @@ public class BagPanel extends JPanel {
     private void emptySlot(JButton button) {
         button.setText("");
         button.setIcon(null);
-        button.setActionCommand(null);
-    }
-
-    // EFFECTS : returns a given string made all lowercase, and removes underscores with spaces
-    private String foodToString(FoodType f) {
-        return f.toString().toLowerCase().replaceAll("_", " ");
+        button.setAction(null);
     }
 }

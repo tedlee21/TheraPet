@@ -2,14 +2,20 @@ package ui;
 
 import model.PetType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 // Represents a JPanel for which the buttons to play with user's pet will be
 public class PlayPanel extends JPanel {
     private static final Integer HEIGHT = 60;       //Height of the main panel
-    private PetAppGUI main;                         //main user profile
+    private PetAppGUI main;                         //main GUI for access to other panels and user
 
     // EFFECTS : main is set to mainImport; layout is set to GridLayout
     //           and preferred size is set; Border is titled to reflect
@@ -86,6 +92,7 @@ public class PlayPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
+                main.updatePetIconHappy();
                 main.textPanel.textLog.setText("YAY! I'm happy because you're happy!"
                         + " Let's continue to have a great day!");
             }
@@ -104,6 +111,7 @@ public class PlayPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
+                main.updatePetIcon();
                 main.textPanel.textLog.setText("Aw " + main.user.getName()
                         + ", I'm so sorry you're feeling down, try having some tea!");
             }
@@ -122,6 +130,7 @@ public class PlayPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
+                main.updatePetIcon();
                 main.textPanel.textLog.setText("Who made you upset! Whoever it is, I'll beat them up!!!");
             }
         }
@@ -139,6 +148,7 @@ public class PlayPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
+                main.updatePetIconHappy();
                 main.textPanel.textLog.setText("Life can be a lot sometimes."
                         + " Better days will come, but until then, you have me!");
             }
@@ -158,6 +168,7 @@ public class PlayPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            main.updatePetIconHappy();
             main.textPanel.textLog.setText("Oh yeah, that's the spot!!");
         }
     }
@@ -175,6 +186,7 @@ public class PlayPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            main.updatePetIcon();
             main.textPanel.textLog.setText("Whew! Ha! Whew! Ha! Working up a sweat!!");
         }
     }
@@ -200,13 +212,14 @@ public class PlayPanel extends JPanel {
     // EFFECTS : displays results of playing with a ball depending on user's pet type
     private void playBall() {
         PetType type = main.user.getPetType();
+        main.updatePetIconHappy();
 
         if (type.equals(PetType.DOG)) {
             main.textPanel.textLog.setText("Ooh Ooh! Ball!! I got it!! I got it!!");
         } else if (type.equals(PetType.CAT)) {
             main.textPanel.textLog.setText("Hmmm.. a Ball? Amusing.");
         } else if (type.equals(PetType.BIRD)) {
-            main.textPanel.textLog.setText("I.. I don't know how to play with this!");
+            main.textPanel.textLog.setText("I.. I'm not sure how to play with this .. but thank you!");
         } else {
             main.textPanel.textLog.setText("This ball is as big as I am!!\n ... \n"
                     + "My new best friend! ..Other than you of course!!");

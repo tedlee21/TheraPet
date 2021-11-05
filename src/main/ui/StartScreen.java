@@ -9,12 +9,11 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class StartScreen extends JFrame {
     private static final String JSON_STORE = "./data/profile.json";
     private static final Integer INITIAL_BAL = 50;
-    private JLabel label;
-    private JTextField field;
 
     protected Profile user;
     private PetType petType;
