@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 
 public class StartScreen extends JFrame {
     private static final String JSON_STORE = "./data/profile.json";
@@ -51,7 +50,7 @@ public class StartScreen extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            popup = new JDialog((Dialog) null, "Talk", true);
+            popup = new JDialog((Dialog) null, "Choose a Pet!", true);
             popup.setSize(400,400);
             popup.setLocationRelativeTo(null);
             popup.setLayout(new GridLayout(5,1));

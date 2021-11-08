@@ -94,7 +94,7 @@ public class PetAppGUI extends JFrame {
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
-    protected void updatePetIcon() {
+    protected void updatePetIconBase() {
         try {
             Image img = ImageIO.read(new File("resources/"
                     + user.getPetType().toString().toLowerCase()
@@ -106,12 +106,13 @@ public class PetAppGUI extends JFrame {
         }
     }
 
-    protected void updatePetIconHappy() {
+    protected void updatePetIconFile(String file) {
         try {
             Image img = ImageIO.read(new File("resources/"
                     + user.getPetType().toString().toLowerCase()
                     + "/"
-                    + "happy.png"));
+                    + file
+                    + ".png"));
             Image scaledImg = img.getScaledInstance(250,250, Image.SCALE_REPLICATE);
             petPanel.picture.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {

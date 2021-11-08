@@ -1,12 +1,9 @@
 package ui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import model.Profile;
 import persistence.JsonWriter;
@@ -93,7 +90,7 @@ public class DialoguePanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            main.updatePetIcon();
+            main.updatePetIconBase();
             user.addBalance(1);
             main.leftPanel.coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
         }
