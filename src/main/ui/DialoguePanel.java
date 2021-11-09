@@ -1,16 +1,19 @@
 package ui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import model.Profile;
 import persistence.JsonWriter;
 
 // Represents a JPanel for which dialogue, the save button, and the coin button will be
 public class DialoguePanel extends JPanel {
-    private static final Integer HEIGHT = 120;      //Height of the main panel
+    private static final Integer HEIGHT = 100;      //Height of the main panel
     private PetAppGUI main;                         //main GUI for access to other panels and user
     private Profile user;                           //main user profile
     private JsonWriter jsonWriter;
@@ -47,18 +50,38 @@ public class DialoguePanel extends JPanel {
         textLog = new JTextArea();
         textPanel.add(textLog);
 
-        add(textPanel, BorderLayout.WEST);
+        add(textPanel, BorderLayout.CENTER);
     }
 
     // EFFECTS : adds a save button to center of main panel
     private void addSaveButton() {
         JButton saveButton = new JButton(new SaveAction());
-        add(saveButton, BorderLayout.CENTER);
+        Dimension panelSize = new Dimension();
+        panelSize.width = ShopPanel.WIDTH;
+        saveButton.setPreferredSize(panelSize);
+        try {
+            Image img = ImageIO.read(new File("resources/save.png"));
+            Image scaledImg = img.getScaledInstance(80,80, Image.SCALE_REPLICATE);
+            saveButton.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        add(saveButton, BorderLayout.WEST);
     }
 
     // EFFECTS : adds a coin earning button to right of main panel
     private void addCoinButton() {
         JButton coinButton = new JButton(new CoinAction());
+        Dimension panelSize = new Dimension();
+        panelSize.width = BagPanel.WIDTH;
+        coinButton.setPreferredSize(panelSize);
+        try {
+            Image img = ImageIO.read(new File("resources/coin.png"));
+            Image scaledImg = img.getScaledInstance(80,80, Image.SCALE_REPLICATE);
+            coinButton.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         add(coinButton, BorderLayout.EAST);
     }
 
@@ -68,13 +91,12 @@ public class DialoguePanel extends JPanel {
      */
     private class SaveAction extends AbstractAction {
 
-        SaveAction() {
-            super("Save Game");
-        }
+        SaveAction() {}
 
         @Override
         public void actionPerformed(ActionEvent evt) {
             saveProfile();
+            textLog.setText("Saved the game!");
         }
     }
 
@@ -84,9 +106,7 @@ public class DialoguePanel extends JPanel {
      */
     private class CoinAction extends AbstractAction {
 
-        CoinAction() {
-            super("Earn Coins");
-        }
+        CoinAction() {}
 
         @Override
         public void actionPerformed(ActionEvent evt) {

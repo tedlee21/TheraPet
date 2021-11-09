@@ -11,7 +11,7 @@ import model.*;
 
 // Represents a JPanel displaying a user's name and balance, along with the shop to buy food from
 public class ShopPanel extends JPanel {
-    private static final Integer WIDTH = 170;       //Width of the main panel
+    protected static final Integer WIDTH = 160;       //Width of the main panel
     private PetAppGUI main;                         //main GUI for access to other panels and user
     protected Profile user;                         //main user profile
     protected JTextArea coins;                      //JTextArea displaying user's name and balance
@@ -104,24 +104,12 @@ public class ShopPanel extends JPanel {
     // EFFECTS : updates slotButton in BagPanel with current quantity of food in the slot
     private void updateSlot(Food food) {
         int index = user.findFood(food);
-        if (index == 0) {
-            updateMapping(slots.slotButton1, food);
-            slots.slotButton1.setText("x " + user.readSlot(0).getQuantity());
-        } else if (index == 1) {
-            updateMapping(slots.slotButton2, food);
-            slots.slotButton2.setText("x " + user.readSlot(1).getQuantity());
-        } else if (index == 2) {
-            updateMapping(slots.slotButton3, food);
-            slots.slotButton3.setText("x " + user.readSlot(2).getQuantity());
-        } else if (index == 3) {
-            updateMapping(slots.slotButton4, food);
-            slots.slotButton4.setText("x " + user.readSlot(3).getQuantity());
-        } else if (index == 4) {
-            updateMapping(slots.slotButton5, food);
-            slots.slotButton5.setText("x " + user.readSlot(4).getQuantity());
-        } else {
-            updateMapping(slots.slotButton6, food);
-            slots.slotButton6.setText("x " + user.readSlot(5).getQuantity());
+        for (int i = 0; i < Profile.MAX_SIZE; i++) {
+            if (index == i) {
+                updateMapping(getSlotButton(i), food);
+                getSlotButton(i).setText("x " + user.readSlot(i).getQuantity());
+                break;
+            }
         }
     }
 
@@ -137,10 +125,6 @@ public class ShopPanel extends JPanel {
             e.printStackTrace();
         }
     }
-
-
-
-
 
     /**                                                             //following classes and methods
      * Represents action to be taken when user wants to feed        //duplicated from BagPanel
@@ -174,24 +158,23 @@ public class ShopPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS : updates each empty slot to reflect its current contents
     private void updateEmptySlots() {
-        if (user.readSlot(0).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slots.slotButton1);
+        for (int i = 0; i < Profile.MAX_SIZE; i++) {
+            if (user.readSlot(i).getFood().getType() == FoodType.EMPTY) {
+                emptySlot(getSlotButton(i));
+            }
         }
-        if (user.readSlot(1).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slots.slotButton2);
+    }
+
+    // EFFECTS : returns corresponding slotButton given index number
+    private JButton getSlotButton(int buttonIndex) {
+        if (buttonIndex == 0) {
+            return slots.slotButton1;
+        } else if (buttonIndex == 1) {
+            return slots.slotButton2;
+        } else if (buttonIndex == 2) {
+            return slots.slotButton3;
         }
-        if (user.readSlot(2).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slots.slotButton3);
-        }
-        if (user.readSlot(3).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slots.slotButton4);
-        }
-        if (user.readSlot(4).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slots.slotButton5);
-        }
-        if (user.readSlot(5).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slots.slotButton6);
-        }
+        return slots.slotButton4;
     }
 
     // MODIFIES: button

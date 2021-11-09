@@ -2,13 +2,16 @@ package ui;
 
 import model.PetType;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 
 // Represents a JPanel for which the buttons to play with user's pet will be
 public class PlayPanel extends JPanel {
-    private static final Integer HEIGHT = 60;       //Height of the main panel
+    private static final Integer HEIGHT = 85;       //Height of the main panel
     private PetAppGUI main;                         //main GUI for access to other panels and user
 
     // EFFECTS : main is set to mainImport; layout is set to GridLayout
@@ -30,10 +33,70 @@ public class PlayPanel extends JPanel {
      * Helper to add main play buttons.
      */
     private void addButtonPanel() {
-        add(new JButton(new TalkAction()));
-        add(new JButton(new PetAction()));
-        add(new JButton(new ExerciseAction()));
-        add(new JButton(new BallAction()));
+        addChatButton();
+        addPetButton();
+        addExerciseButton();
+        addBallButton();
+    }
+
+    // MODIFIES: this, chatButton
+    // EFFECTS : creates new JButton chatButton, and assigns Action and Icon;
+    //           adds button to PlayPanel
+    private void addChatButton() {
+        JButton chatButton = new JButton(new TalkAction());
+        try {
+            Image img = ImageIO.read(new File("resources/chat.png"));
+            Image scaledImg = img.getScaledInstance(65,65, Image.SCALE_REPLICATE);
+            chatButton.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        add(chatButton);
+    }
+
+    // MODIFIES: this, petButton
+    // EFFECTS : creates new JButton petButton, and assigns Action and Icon;
+    //           adds button to PlayPanel
+    private void addPetButton() {
+        JButton petButton = new JButton(new PetAction());
+        try {
+            Image img = ImageIO.read(new File("resources/touch.png"));
+            Image scaledImg = img.getScaledInstance(60,60, Image.SCALE_REPLICATE);
+            petButton.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        add(petButton);
+    }
+
+    // MODIFIES: this, exerciseButton
+    // EFFECTS : creates new JButton exerciseButton, and assigns Action and Icon;
+    //           adds button to PlayPanel
+    private void addExerciseButton() {
+        JButton exerciseButton = new JButton(new ExerciseAction());
+        try {
+            Image img = ImageIO.read(new File("resources/exercise.png"));
+            Image scaledImg = img.getScaledInstance(65,65, Image.SCALE_REPLICATE);
+            exerciseButton.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        add(exerciseButton);
+    }
+
+    // MODIFIES: this, ballButton
+    // EFFECTS : creates new JButton ballButton, and assigns Action and Icon;
+    //           adds button to PlayPanel
+    private void addBallButton() {
+        JButton ballButton = new JButton(new BallAction());
+        try {
+            Image img = ImageIO.read(new File("resources/ball.png"));
+            Image scaledImg = img.getScaledInstance(65,65, Image.SCALE_REPLICATE);
+            ballButton.setIcon(new ImageIcon(scaledImg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        add(ballButton);
     }
 
     /**
@@ -42,10 +105,9 @@ public class PlayPanel extends JPanel {
      */
     private class TalkAction extends AbstractAction {
         private JDialog popup;
-        private JPanel panel;
 
         TalkAction() {
-            super("Talk");
+            super("Chat");
         }
 
         @Override
@@ -175,7 +237,7 @@ public class PlayPanel extends JPanel {
     private class ExerciseAction extends AbstractAction {
 
         ExerciseAction() {
-            super("Exercise");
+            super("Work Out");
         }
 
         @Override

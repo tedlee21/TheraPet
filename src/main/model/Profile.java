@@ -11,7 +11,7 @@ import java.util.List;
 //represents user's profile with username, balance, storage, and pet
 //Data persistence implementations based off JsonSerializationDemo file
 public class Profile implements Writable {
-    public static final Integer MAX_SIZE = 6;
+    public static final Integer MAX_SIZE = 4;
     public static final Slot EMPTY_SLOT = new Slot(new Food(FoodType.EMPTY, 0), 0);
     private String name;                        //users name
     private int balance;                        //current balance of user

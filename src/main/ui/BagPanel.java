@@ -11,15 +11,13 @@ import java.io.IOException;
 
 // Represents a JPanel that will display user's inventory from which they may feed the pet from
 public class BagPanel extends JPanel {
-    protected static final Integer WIDTH = 250;     //Width of the main panel
+    protected static final Integer WIDTH = 230;     //Width of the main panel
     private PetAppGUI main;                         //main GUI for access to other panels and user
     protected Profile user;                         //main user profile
     protected JButton slotButton1;
     protected JButton slotButton2;
     protected JButton slotButton3;
     protected JButton slotButton4;
-    protected JButton slotButton5;
-    protected JButton slotButton6;
     protected DialoguePanel textLog;                //DialoguePanel to access pet text field
 
 
@@ -49,14 +47,10 @@ public class BagPanel extends JPanel {
         slotButton2 = makeSlotButton(user.readSlot(1).getFood(), user.readSlot(1).getQuantity());
         slotButton3 = makeSlotButton(user.readSlot(2).getFood(), user.readSlot(2).getQuantity());
         slotButton4 = makeSlotButton(user.readSlot(3).getFood(), user.readSlot(3).getQuantity());
-        slotButton5 = makeSlotButton(user.readSlot(4).getFood(), user.readSlot(4).getQuantity());
-        slotButton6 = makeSlotButton(user.readSlot(5).getFood(), user.readSlot(5).getQuantity());
         add(slotButton1);
         add(slotButton2);
         add(slotButton3);
         add(slotButton4);
-        add(slotButton5);
-        add(slotButton6);
     }
 
     // REQUIRES: food is instantiated
@@ -106,12 +100,6 @@ public class BagPanel extends JPanel {
                     updateEmptySlots();
                 }
             }
-//            } else {
-//                JOptionPane.showMessageDialog(null,
-//                        "should not happen",
-//                        "Insufficient Balance",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
         }
     }
 
@@ -120,42 +108,34 @@ public class BagPanel extends JPanel {
     // EFFECTS : updates slotButton in BagPanel with current quantity of food in the slot
     private void updateSlot(Food food) {
         int index = user.findFood(food);
-        if (index == 0) {
-            slotButton1.setText("x " + user.readSlot(0).getQuantity());
-        } else if (index == 1) {
-            slotButton2.setText("x " + user.readSlot(1).getQuantity());
-        } else if (index == 2) {
-            slotButton3.setText("x " + user.readSlot(2).getQuantity());
-        } else if (index == 3) {
-            slotButton4.setText("x " + user.readSlot(3).getQuantity());
-        } else if (index == 4) {
-            slotButton5.setText("x " + user.readSlot(4).getQuantity());
-        } else {
-            slotButton6.setText("x " + user.readSlot(5).getQuantity());
+        for (int i = 0; i < Profile.MAX_SIZE; i++) {
+            if (index == i) {
+                getSlotButton(i).setText("x " + user.readSlot(i).getQuantity());
+                break;
+            }
         }
     }
 
     // MODIFIES: this
     // EFFECTS : updates each empty slot to reflect its current contents
     private void updateEmptySlots() {
-        if (user.readSlot(0).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slotButton1);
+        for (int i = 0; i < Profile.MAX_SIZE; i++) {
+            if (user.readSlot(i).getFood().getType() == FoodType.EMPTY) {
+                emptySlot(getSlotButton(i));
+            }
         }
-        if (user.readSlot(1).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slotButton2);
+    }
+
+    // EFFECTS : returns corresponding slotButton given index number
+    private JButton getSlotButton(int buttonIndex) {
+        if (buttonIndex == 0) {
+            return slotButton1;
+        } else if (buttonIndex == 1) {
+            return slotButton2;
+        } else if (buttonIndex == 2) {
+            return slotButton3;
         }
-        if (user.readSlot(2).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slotButton3);
-        }
-        if (user.readSlot(3).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slotButton4);
-        }
-        if (user.readSlot(4).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slotButton5);
-        }
-        if (user.readSlot(5).getFood().getType() == FoodType.EMPTY) {
-            emptySlot(slotButton6);
-        }
+        return slotButton4;
     }
 
     // MODIFIES: button
