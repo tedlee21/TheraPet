@@ -23,15 +23,19 @@ public class PlayPanel extends JPanel {
         Dimension size = new Dimension();
         size.height = HEIGHT;
         setPreferredSize(size);
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(143, 111, 79), 2),
+                "Play",
+                0, 0,
+                new Font(Font.SERIF, Font.BOLD,14), Color.white));
+        setBackground(new Color(180, 139, 98));
+        setOpaque(true);
         setVisible(true);
-        setBorder(BorderFactory.createTitledBorder("Play"));
 
         addButtonPanel();
     }
 
-    /**
-     * Helper to add main play buttons.
-     */
+    // MODIFIES: this
+    // EFFECTS : helper method adds play option buttons to main panel
     private void addButtonPanel() {
         addChatButton();
         addPetButton();
@@ -39,13 +43,13 @@ public class PlayPanel extends JPanel {
         addBallButton();
     }
 
-    // MODIFIES: this, chatButton
+    // MODIFIES: this
     // EFFECTS : creates new JButton chatButton, and assigns Action and Icon;
     //           adds button to PlayPanel
     private void addChatButton() {
         JButton chatButton = new JButton(new TalkAction());
         try {
-            Image img = ImageIO.read(new File("resources/chat.png"));
+            Image img = ImageIO.read(new File("resources/button/chat.png"));
             Image scaledImg = img.getScaledInstance(65,65, Image.SCALE_REPLICATE);
             chatButton.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
@@ -54,13 +58,13 @@ public class PlayPanel extends JPanel {
         add(chatButton);
     }
 
-    // MODIFIES: this, petButton
+    // MODIFIES: this
     // EFFECTS : creates new JButton petButton, and assigns Action and Icon;
     //           adds button to PlayPanel
     private void addPetButton() {
         JButton petButton = new JButton(new PetAction());
         try {
-            Image img = ImageIO.read(new File("resources/touch.png"));
+            Image img = ImageIO.read(new File("resources/button/touch.png"));
             Image scaledImg = img.getScaledInstance(60,60, Image.SCALE_REPLICATE);
             petButton.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
@@ -69,13 +73,13 @@ public class PlayPanel extends JPanel {
         add(petButton);
     }
 
-    // MODIFIES: this, exerciseButton
+    // MODIFIES: this
     // EFFECTS : creates new JButton exerciseButton, and assigns Action and Icon;
     //           adds button to PlayPanel
     private void addExerciseButton() {
         JButton exerciseButton = new JButton(new ExerciseAction());
         try {
-            Image img = ImageIO.read(new File("resources/exercise.png"));
+            Image img = ImageIO.read(new File("resources/button/exercise.png"));
             Image scaledImg = img.getScaledInstance(65,65, Image.SCALE_REPLICATE);
             exerciseButton.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
@@ -84,13 +88,13 @@ public class PlayPanel extends JPanel {
         add(exerciseButton);
     }
 
-    // MODIFIES: this, ballButton
+    // MODIFIES: this
     // EFFECTS : creates new JButton ballButton, and assigns Action and Icon;
     //           adds button to PlayPanel
     private void addBallButton() {
         JButton ballButton = new JButton(new BallAction());
         try {
-            Image img = ImageIO.read(new File("resources/ball.png"));
+            Image img = ImageIO.read(new File("resources/button/ball.png"));
             Image scaledImg = img.getScaledInstance(65,65, Image.SCALE_REPLICATE);
             ballButton.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
@@ -106,10 +110,13 @@ public class PlayPanel extends JPanel {
     private class TalkAction extends AbstractAction {
         private JDialog popup;
 
+        //Constructor sets button label
         TalkAction() {
             super("Chat");
         }
 
+        // MODIFIES: this
+        // EFFECTS : displays popup dialog with buttons to select user's mood;
         @Override
         public void actionPerformed(ActionEvent evt) {
             popup = new JDialog((Dialog) null, "Talk", true);
@@ -141,10 +148,15 @@ public class PlayPanel extends JPanel {
          */
         private class HappyAction extends AbstractAction {
 
+            //Constructor sets button label
             HappyAction() {
                 super("Happy");
             }
 
+            // MODIFIES: this
+            // EFFECTS : disposes mood select popup;
+            //           calls method to update pet icon with happy file name;
+            //           text log displays reaction to user mood
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
@@ -160,10 +172,15 @@ public class PlayPanel extends JPanel {
          */
         private class SadAction extends AbstractAction {
 
+            //Constructor sets button label
             SadAction() {
                 super("Sad");
             }
 
+            // MODIFIES: this
+            // EFFECTS : disposes mood select popup;
+            //           calls method to update pet icon with sad file name;
+            //           text log displays reaction to user mood
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
@@ -179,10 +196,15 @@ public class PlayPanel extends JPanel {
          */
         private class AngryAction extends AbstractAction {
 
+            //Constructor sets button label
             AngryAction() {
                 super("Angry");
             }
 
+            // MODIFIES: this
+            // EFFECTS : disposes mood select popup;
+            //           calls method to update pet icon to neutral;
+            //           text log displays reaction to user mood
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
@@ -197,10 +219,15 @@ public class PlayPanel extends JPanel {
          */
         private class TiredAction extends AbstractAction {
 
+            //Constructor sets button label
             TiredAction() {
                 super("Tired");
             }
 
+            // MODIFIES: this
+            // EFFECTS : disposes mood select popup;
+            //           calls method to update pet icon with sad file name;
+            //           text log displays reaction to user mood
             @Override
             public void actionPerformed(ActionEvent evt) {
                 popup.dispose();
@@ -218,10 +245,14 @@ public class PlayPanel extends JPanel {
      */
     private class PetAction extends AbstractAction {
 
+        //Constructor sets button label
         PetAction() {
             super("Pet");
         }
 
+        // MODIFIES: this
+        // EFFECTS : calls method to update pet icon with happy file name;
+        //           text log displays reaction to PetAction
         @Override
         public void actionPerformed(ActionEvent evt) {
             main.updatePetIconFile("happy");
@@ -236,10 +267,14 @@ public class PlayPanel extends JPanel {
      */
     private class ExerciseAction extends AbstractAction {
 
+        //Constructor sets button label
         ExerciseAction() {
             super("Work Out");
         }
 
+        // MODIFIES: this
+        // EFFECTS : calls method to update pet icon with exercise file name;
+        //           text log displays reaction to ExerciseAction
         @Override
         public void actionPerformed(ActionEvent evt) {
             main.updatePetIconFile("exercise");
@@ -253,14 +288,15 @@ public class PlayPanel extends JPanel {
      */
     private class BallAction extends AbstractAction {
 
+        //Constructor sets button label
         BallAction() {
             super("Ball");
         }
 
+        // EFFECTS : runs playBall
         @Override
         public void actionPerformed(ActionEvent evt) {
             playBall();
-
         }
     }
 

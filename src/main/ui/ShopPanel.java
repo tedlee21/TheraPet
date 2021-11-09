@@ -18,9 +18,9 @@ public class ShopPanel extends JPanel {
     protected BagPanel slots;                       //JPanel to access bag slot buttons
 
     // REQUIRES: mainUser must be instantiated
-    // EFFECTS : user is set to bagPanel.user; layout is set to GridLayout and preferred size is set;
-    //           Border is titled to reflect panel function; Stats panel is added, and Shop items
-    //           are added
+    // EFFECTS : main is set to mainImport; user is set to main.user; slots is set to main.bagPanel
+    //           layout is set to GridLayout; preferred size is set; Border is titled to reflect panel function;
+    //           Stats panel is added, and Shop items are added
     public ShopPanel(PetAppGUI mainImport) {
         this.main = mainImport;
         this.user = main.user;
@@ -29,7 +29,12 @@ public class ShopPanel extends JPanel {
         Dimension size = new Dimension();
         size.width = WIDTH;
         setPreferredSize(size);
-        setBorder(BorderFactory.createTitledBorder("Shop"));
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(143, 111, 79), 2),
+                "Shop",
+                0, 0,
+                new Font(Font.SERIF, Font.BOLD,14), Color.white));
+        setBackground(new Color(180, 139, 98));
+        setOpaque(true);
         setVisible(true);
 
         initializeStats();
@@ -37,25 +42,26 @@ public class ShopPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS : initializes JPanel that displays user's name and current balance
+    // EFFECTS : initializes JPanel that displays user's name and current balance,
+    //           and adds it to main Panel
     private void initializeStats() {
         JPanel stats = new JPanel();
+        stats.setBackground(Color.white);
         coins = new JTextArea("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
         stats.add(coins);
         add(stats);
     }
 
-    /**
-     * Helper to add buttons for buying Food.
-     */
+    // EFFECTS : helper method to add food purchase buttons to panel
     private void addItems() {
         addFoodButton(Food.COOKIE);
         addFoodButton(Food.ICE_CREAM);
         addFoodButton(Food.PIZZA);
     }
 
+    // MODIFIES: this
     // REQUIRES: food is instantiated
-    // EFFECTS : adds button for given food with food type and price
+    // EFFECTS : adds button to panel for given food with food type and price
     private void addFoodButton(Food food) {
         JButton foodButton = new JButton(new BuyFoodAction(food));
         foodButton.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -80,10 +86,16 @@ public class ShopPanel extends JPanel {
     private class BuyFoodAction extends AbstractAction {
         private Food food;
 
+        // Constructor sets food to type
         BuyFoodAction(Food type) {
             food = type;
         }
 
+        // MODIFIES: this
+        // EFFECTS : if user has enough balance, purchases 1 of food
+        //           and adds it to user storage, then updates user stat
+        //           display to show new balance and updates bag slots;
+        //           else displays popup window indicating insufficient balance
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (food.getPrice() <= user.getBalance()) {
@@ -100,14 +112,13 @@ public class ShopPanel extends JPanel {
         }
     }
 
-    // MODIFIES: slotButton
     // EFFECTS : updates slotButton in BagPanel with current quantity of food in the slot
     private void updateSlot(Food food) {
         int index = user.findFood(food);
         for (int i = 0; i < Profile.MAX_SIZE; i++) {
             if (index == i) {
-                updateMapping(getSlotButton(i), food);
-                getSlotButton(i).setText("x " + user.readSlot(i).getQuantity());
+                updateMapping(main.bagPanel.getSlotButton(i), food);
+                main.bagPanel.getSlotButton(i).setText("x " + user.readSlot(i).getQuantity());
                 break;
             }
         }
@@ -126,17 +137,23 @@ public class ShopPanel extends JPanel {
         }
     }
 
-    /**                                                             //following classes and methods
+    /**                                                             //following class is
      * Represents action to be taken when user wants to feed        //duplicated from BagPanel
      * selected food                                                //to retain desired behavior
      */
     private class FeedFoodAction extends AbstractAction {
         private Food food;
 
+        // EFFECTS : Constructor sets food to type
         FeedFoodAction(Food type) {
             food = type;
         }
 
+        // MODIFIES: this
+        // EFFECTS : if slot button contains food to feed, feeds 1 of the food
+        //           in slot to pet, and updates user storage, slot button, and
+        //           displays feedback on text log;
+        //           else does nothing
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (food.getType() != FoodType.EMPTY) {
@@ -149,39 +166,10 @@ public class ShopPanel extends JPanel {
                 if (user.findFood(food) != -1) {
                     updateSlot(food);
                 } else {
-                    updateEmptySlots();
+                    main.bagPanel.updateEmptySlots();
                 }
             }
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS : updates each empty slot to reflect its current contents
-    private void updateEmptySlots() {
-        for (int i = 0; i < Profile.MAX_SIZE; i++) {
-            if (user.readSlot(i).getFood().getType() == FoodType.EMPTY) {
-                emptySlot(getSlotButton(i));
-            }
-        }
-    }
-
-    // EFFECTS : returns corresponding slotButton given index number
-    private JButton getSlotButton(int buttonIndex) {
-        if (buttonIndex == 0) {
-            return slots.slotButton1;
-        } else if (buttonIndex == 1) {
-            return slots.slotButton2;
-        } else if (buttonIndex == 2) {
-            return slots.slotButton3;
-        }
-        return slots.slotButton4;
-    }
-
-    // MODIFIES: button
-    // EFFECTS : removes text and Icon of button
-    private void emptySlot(JButton button) {
-        button.setText("");
-        button.setIcon(null);
-        button.setAction(null);
-    }
 }

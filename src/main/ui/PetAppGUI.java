@@ -14,22 +14,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-//Digital Pet Application        //Graphical interface code based off AlarmSystem, TrafficLight, and LabelChanger
-                                 //files from CPSC 210 Class
+//Digital Pet Application        //Graphical interface code in UI package based off AlarmSystem, TrafficLight,
+                                 //and LabelChanger files from CPSC 210 Class;
                                  //Data persistence implementations based off JsonSerializationDemo file
 public class PetAppGUI extends JFrame {
     protected static final int WIDTH = 800;
     protected static final int HEIGHT = 500;
     protected static final String JSON_STORE = "./data/profile.json";
-    protected Profile user;
-    private Scanner input;
     protected JsonWriter jsonWriter;
+    private Scanner input;
 
-    protected PetPanel petPanel;
-    private PlayPanel playPanel;
-    protected BagPanel bagPanel;
-    protected DialoguePanel textPanel;
-    protected ShopPanel leftPanel;
+    protected Profile user;                     //main user profile
+
+    private PlayPanel playPanel;                //Panel on window for play options
+    protected PetPanel petPanel;                //Panel displaying pet
+    protected BagPanel bagPanel;                //Panel displaying user storage
+    protected DialoguePanel textPanel;          //Panel displaying pet dialogue
+    protected ShopPanel shopPanel;              //Panel displaying shop and user balance
 
     // EFFECTS : initializes the digital pet application GUI
     public PetAppGUI(Profile user, boolean loaded) {
@@ -47,11 +48,11 @@ public class PetAppGUI extends JFrame {
         textPanel = new DialoguePanel(this);
         playPanel = new PlayPanel(this);
         bagPanel = new BagPanel(this);
-        leftPanel = new ShopPanel(this);
+        shopPanel = new ShopPanel(this);
         add(playPanel, BorderLayout.NORTH);
         add(bagPanel, BorderLayout.EAST);
         add(textPanel, BorderLayout.SOUTH);
-        add(leftPanel, BorderLayout.WEST);
+        add(shopPanel, BorderLayout.WEST);
         add(petPanel, BorderLayout.CENTER);
 
         setTitle("Digital Pet");
@@ -85,15 +86,16 @@ public class PetAppGUI extends JFrame {
         }
     }
 
-    /**
-     * Helper to centre main application window on desktop
-     */
+    // MODIFIES: this
+    // EFFECTS : centers main application window on desktop
     private void centreOnScreen() {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
+    // MODIFIES: this
+    // EFFECTS : updates PetPanel's image to reflect pet in neutral state
     protected void updatePetIconBase() {
         try {
             Image img = ImageIO.read(new File("resources/"
@@ -106,6 +108,8 @@ public class PetAppGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS : updates PetPanel's image to reflect pet with given file name
     protected void updatePetIconFile(String file) {
         try {
             Image img = ImageIO.read(new File("resources/"
@@ -120,6 +124,8 @@ public class PetAppGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS : updates PetPanel's image to reflect pet in neutral state
     protected void updatePetIconFood(Food food) {
         String foodString = foodToString(food.getType());
         try {

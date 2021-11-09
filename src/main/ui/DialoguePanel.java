@@ -32,35 +32,44 @@ public class DialoguePanel extends JPanel {
         Dimension size = new Dimension();
         size.height = HEIGHT;
         setPreferredSize(size);
-
-        setBorder(BorderFactory.createLineBorder(Color.blue));
+        setBorder(BorderFactory.createLineBorder(new Color(143, 111, 79), 2));
+        setBackground(new Color(180, 139, 98));
+        setOpaque(true);
 
         addTextPanel();
         addSaveButton();
         addCoinButton();
     }
 
-    // EFFECTS : adds a text panel to the left of main panel
+    // MODIFIES: this
+    // EFFECTS : adds a text panel to the center of main panel
     private void addTextPanel() {
         JPanel textPanel = new JPanel();
+        textPanel.setLayout(new GridLayout(1,1));
         Dimension panelSize = new Dimension();
         panelSize.width = (PetAppGUI.WIDTH - BagPanel.WIDTH);
         textPanel.setPreferredSize(panelSize);
-        textPanel.setBorder(BorderFactory.createTitledBorder(user.getPetName() + ": "));
+        textPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(143, 111, 79), 2),
+                user.getPetName() + ": ",
+                0, 0,
+                new Font(Font.SERIF, Font.BOLD,14), Color.white));
+        textPanel.setBackground(new Color(180, 139, 98));
+        textPanel.setOpaque(true);
         textLog = new JTextArea();
         textPanel.add(textLog);
 
         add(textPanel, BorderLayout.CENTER);
     }
 
-    // EFFECTS : adds a save button to center of main panel
+    // MODIFIES: this
+    // EFFECTS : adds a save button to west of main panel
     private void addSaveButton() {
         JButton saveButton = new JButton(new SaveAction());
         Dimension panelSize = new Dimension();
         panelSize.width = ShopPanel.WIDTH;
         saveButton.setPreferredSize(panelSize);
         try {
-            Image img = ImageIO.read(new File("resources/save.png"));
+            Image img = ImageIO.read(new File("resources/button/save.png"));
             Image scaledImg = img.getScaledInstance(80,80, Image.SCALE_REPLICATE);
             saveButton.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
@@ -69,14 +78,15 @@ public class DialoguePanel extends JPanel {
         add(saveButton, BorderLayout.WEST);
     }
 
-    // EFFECTS : adds a coin earning button to right of main panel
+    // MODIFIES: this
+    // EFFECTS : adds a coin earning button to east of main panel
     private void addCoinButton() {
         JButton coinButton = new JButton(new CoinAction());
         Dimension panelSize = new Dimension();
         panelSize.width = BagPanel.WIDTH;
         coinButton.setPreferredSize(panelSize);
         try {
-            Image img = ImageIO.read(new File("resources/coin.png"));
+            Image img = ImageIO.read(new File("resources/button/coin.png"));
             Image scaledImg = img.getScaledInstance(80,80, Image.SCALE_REPLICATE);
             coinButton.setIcon(new ImageIcon(scaledImg));
         } catch (IOException e) {
@@ -93,6 +103,8 @@ public class DialoguePanel extends JPanel {
 
         SaveAction() {}
 
+        // MODIFIES: this
+        // EFFECTS : saves profile to JSON; updates text display so show game was saved
         @Override
         public void actionPerformed(ActionEvent evt) {
             saveProfile();
@@ -108,11 +120,14 @@ public class DialoguePanel extends JPanel {
 
         CoinAction() {}
 
+        // MODIFIES: this
+        // EFFECTS : sets pet image to neutral state; adds 1 to user balance;
+        //           updates user stat display to show new balance
         @Override
         public void actionPerformed(ActionEvent evt) {
             main.updatePetIconBase();
             user.addBalance(1);
-            main.leftPanel.coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
+            main.shopPanel.coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
         }
     }
 

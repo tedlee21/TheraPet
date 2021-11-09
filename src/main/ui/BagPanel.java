@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
-// Represents a JPanel that will display user's inventory from which they may feed the pet from
+// Represents a JPanel that will display user's inventory from which they may feed the pet
 public class BagPanel extends JPanel {
     protected static final Integer WIDTH = 230;     //Width of the main panel
     private PetAppGUI main;                         //main GUI for access to other panels and user
@@ -21,7 +21,7 @@ public class BagPanel extends JPanel {
     protected DialoguePanel textLog;                //DialoguePanel to access pet text field
 
 
-    // EFFECTS: main is set to mainImport; user is set to main.user;
+    // EFFECTS: main is set to mainImport; user is set to main.user; textLog is set to main.textPanel;
     //          layout is set to GridLayout and preferred size is set;
     //          textLog is set to main.textPanel; Border is titled to reflect
     //          panel function; buttons are added to panel
@@ -33,15 +33,19 @@ public class BagPanel extends JPanel {
         Dimension size = new Dimension();
         size.width = WIDTH;
         setPreferredSize(size);
-        setBorder(BorderFactory.createTitledBorder("Bag"));
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(143, 111, 79), 2),
+                "Shop",
+                0, 0,
+                new Font(Font.SERIF, Font.BOLD,14), Color.white));
+        setBackground(new Color(180, 139, 98));
+        setOpaque(true);
         setVisible(true);
 
         addPanelButtons();
     }
 
-    /**
-     * Helper to add buttons for storage slots.
-     */
+    // MODIFIES: this
+    // EFFECTS : makes and adds buttons representing each slot of user's storage
     private void addPanelButtons() {
         slotButton1 = makeSlotButton(user.readSlot(0).getFood(), user.readSlot(0).getQuantity());
         slotButton2 = makeSlotButton(user.readSlot(1).getFood(), user.readSlot(1).getQuantity());
@@ -54,7 +58,7 @@ public class BagPanel extends JPanel {
     }
 
     // REQUIRES: food is instantiated
-    // EFFECTS : returns button for given food with food type and price
+    // EFFECTS : returns new button for given food with food type and price
     private JButton makeSlotButton(Food food, int amount) {
         JButton slotButton = new JButton(new FeedFoodAction(food));
         slotButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -81,10 +85,16 @@ public class BagPanel extends JPanel {
     private class FeedFoodAction extends AbstractAction {
         private Food food;
 
+        // EFFECTS : Constructor sets food to type
         FeedFoodAction(Food type) {
             food = type;
         }
 
+        // MODIFIES: this
+        // EFFECTS : if slot button contains food to feed, feeds 1 of the food
+        //           in slot to pet, and updates user storage, slot button, and
+        //           displays feedback on text log;
+        //           else does nothing
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (food.getType() != FoodType.EMPTY) {
@@ -118,7 +128,7 @@ public class BagPanel extends JPanel {
 
     // MODIFIES: this
     // EFFECTS : updates each empty slot to reflect its current contents
-    private void updateEmptySlots() {
+    public void updateEmptySlots() {
         for (int i = 0; i < Profile.MAX_SIZE; i++) {
             if (user.readSlot(i).getFood().getType() == FoodType.EMPTY) {
                 emptySlot(getSlotButton(i));
@@ -127,7 +137,7 @@ public class BagPanel extends JPanel {
     }
 
     // EFFECTS : returns corresponding slotButton given index number
-    private JButton getSlotButton(int buttonIndex) {
+    public JButton getSlotButton(int buttonIndex) {
         if (buttonIndex == 0) {
             return slotButton1;
         } else if (buttonIndex == 1) {
@@ -139,7 +149,7 @@ public class BagPanel extends JPanel {
     }
 
     // MODIFIES: button
-    // EFFECTS : removes text and Icon of button
+    // EFFECTS : removes text, Icon and Action of button
     private void emptySlot(JButton button) {
         button.setText("");
         button.setIcon(null);
