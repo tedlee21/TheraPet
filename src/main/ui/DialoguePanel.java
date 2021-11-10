@@ -56,6 +56,7 @@ public class DialoguePanel extends JPanel {
         textPanel.setBackground(new Color(180, 139, 98));
         textPanel.setOpaque(true);
         textLog = new JTextArea();
+        textLog.setEditable(false);
         textPanel.add(textLog);
 
         add(textPanel, BorderLayout.CENTER);

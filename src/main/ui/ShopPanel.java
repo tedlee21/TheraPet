@@ -48,6 +48,7 @@ public class ShopPanel extends JPanel {
         JPanel stats = new JPanel();
         stats.setBackground(Color.white);
         coins = new JTextArea("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
+        coins.setEditable(false);
         stats.add(coins);
         add(stats);
     }
