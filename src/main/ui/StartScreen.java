@@ -10,14 +10,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
+// Represents the startup screen allowing user to start a new game or load previous save
 public class StartScreen extends JFrame {
     private static final String JSON_STORE = "./data/profile.json";
     private static final Integer INITIAL_BAL = 50;
 
-    protected Profile user;
-    private PetType petType;
+    protected Profile user;                 //main user profile
+    private PetType petType;                //user's pet type
     private JsonReader jsonReader;
 
+
+    // EFFECTS : layout is set to FlowLayout; preferred size is set;
+    //           start buttons are added
     public StartScreen() {
         super("Digital Pet");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -42,12 +46,15 @@ public class StartScreen extends JFrame {
      */
     private class NewAction extends AbstractAction {
         private JDialog popup;
-        private JPanel panel;
 
+        //Constructor sets button label
         NewAction() {
             super("New Game");
         }
 
+
+        // MODIFIES: this
+        // EFFECTS : opens new popup window to bring user through setup process
         @Override
         public void actionPerformed(ActionEvent evt) {
             popup = new JDialog((Dialog) null, "Choose a Pet!", true);
@@ -95,11 +102,13 @@ public class StartScreen extends JFrame {
         private class PetAction extends AbstractAction {
             private PetType type;
 
+            //Constructor sets button label to given pet type
             PetAction(PetType type) {
                 super(type.name().substring(0,1) + type.name().substring(1).toLowerCase());
                 this.type = type;
             }
 
+            // EFFECTS : sets user petType to type; disposes the popup
             @Override
             public void actionPerformed(ActionEvent evt) {
                 petType = type;
@@ -114,10 +123,15 @@ public class StartScreen extends JFrame {
      */
     private class LoadAction extends AbstractAction {
 
+        //Constructor sets button label
         LoadAction() {
             super("Load Game");
         }
 
+
+        // MODIFIES: this
+        // EFFECTS : loads user profile from save; starts game with loaded value true;
+        //           disposes main popup
         @Override
         public void actionPerformed(ActionEvent evt) {
             loadProfile();
