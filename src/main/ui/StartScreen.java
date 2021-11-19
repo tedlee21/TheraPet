@@ -146,6 +146,8 @@ public class StartScreen extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS : adds image of corresponding file name to frame
     private void addImage(String filename) {
         try {
             Image img = ImageIO.read(new File("resources/titleScreen" + filename + ".png"));
