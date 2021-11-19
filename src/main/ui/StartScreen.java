@@ -4,16 +4,20 @@ import model.PetType;
 import model.Profile;
 import persistence.JsonReader;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 
 // Represents the startup screen allowing user to start a new game or load previous save
 public class StartScreen extends JFrame {
     private static final String JSON_STORE = "./data/profile.json";
     private static final Integer INITIAL_BAL = 50;
+    private static final Integer WIDTH = 500;
+    private static final Integer HEIGHT = 550;
 
     protected Profile user;                 //main user profile
     private PetType petType;                //user's pet type
@@ -25,13 +29,15 @@ public class StartScreen extends JFrame {
     public StartScreen() {
         super("Digital Pet");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(400, 400));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setLayout(new FlowLayout());
         JButton newGame = new JButton(new NewAction());
         JButton loadGame = new JButton(new LoadAction());
+        addImage("Top");
         add(newGame);
         add(loadGame);
+        addImage("Bot");
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -139,6 +145,25 @@ public class StartScreen extends JFrame {
             dispose();
         }
     }
+
+    private void addImage(String filename) {
+        try {
+            Image img = ImageIO.read(new File("resources/titleScreen" + filename + ".png"));
+            Image scaledImg;
+            if (filename == "Top") {
+                scaledImg = img.getScaledInstance(380,150, Image.SCALE_REPLICATE);
+            } else {
+                scaledImg = img.getScaledInstance(WIDTH,340, Image.SCALE_REPLICATE);
+            }
+
+            JLabel label = new JLabel();
+            label.setIcon(new ImageIcon(scaledImg));
+            add(label);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // MODIFIES: this
     // EFFECTS : loads user profile from file
