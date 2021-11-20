@@ -162,7 +162,7 @@ public class PlayPanel extends JPanel {
                 popup.dispose();
                 main.updatePetIconFile("happy");
                 main.textPanel.textLog.setText("YAY! I'm happy because you're happy!"
-                        + " Let's continue to have a great day!");
+                        + "\nLet's continue to have a great day!");
             }
         }
 
@@ -233,7 +233,7 @@ public class PlayPanel extends JPanel {
                 popup.dispose();
                 main.updatePetIconFile("sad");
                 main.textPanel.textLog.setText("Life can be a lot sometimes."
-                        + " Better days will come, but until then, you have me!");
+                        + "\nBetter days will come, but until then, you have me!");
             }
         }
 
