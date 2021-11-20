@@ -48,3 +48,31 @@ to me in more ways than one.
 
 - As a user, I want to be able to save my profile from the main menu to file
 - As a user, I want to be able to choose if I want to load my game from file, or start a new game
+
+
+## Phase 4: Task 2
+
+Sat Nov 20 13:04:22 PST 2021
+Added 1 of COOKIE to bag.
+
+Sat Nov 20 13:04:24 PST 2021
+Added 1 more of COOKIE to bag.
+
+Sat Nov 20 13:04:25 PST 2021
+Added 1 of ICE_CREAM to bag.
+
+Sat Nov 20 13:04:27 PST 2021
+Fed 1 of COOKIE to Pet.
+
+Sat Nov 20 13:04:29 PST 2021
+Fed the last ICE_CREAM to Pet.
+
+Sat Nov 20 13:04:31 PST 2021
+Fed the last COOKIE to Pet.
+
+Sat Nov 20 13:04:37 PST 2021
+Added 1 of PIZZA to bag.
+
+Sat Nov 20 13:04:38 PST 2021
+Fed the last PIZZA to Pet.
+

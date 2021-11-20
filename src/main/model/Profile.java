@@ -61,7 +61,7 @@ public class Profile implements Writable {
         return myPetType;
     }
 
-    // EFFECTS: returns an unmodifiable list of thingies in this workroom
+    // EFFECTS: returns an unmodifiable list of slots in user storage
     public List<Slot> getSlots() {
         return Collections.unmodifiableList(storage);
     }
@@ -116,12 +116,16 @@ public class Profile implements Writable {
     public boolean addFood(Food typeFood, int amountFood) {
         for (Slot s : storage) {
             if (s.getFood() == typeFood) {
+                EventLog.getInstance().logEvent(new Event("Added "
+                        + amountFood + " more of " + typeFood.getType().name() + " to bag."));
                 s.addQuantity(amountFood);
                 return true;
             }
         }
         for (int c = 0; c < MAX_SIZE; c++) {
             if (storage.get(c).getQuantity() == 0) {
+                EventLog.getInstance().logEvent(new Event("Added "
+                        + amountFood + " of " + typeFood.getType().name() + " to bag."));
                 storage.set(c, new Slot(typeFood, amountFood));
                 return true;
             }
@@ -139,8 +143,12 @@ public class Profile implements Writable {
             if (s.getFood() == typeFood) {
                 int count = s.getQuantity();
                 if ((count - amountFood) > 0) {
+                    EventLog.getInstance().logEvent(new Event("Fed "
+                            + amountFood + " of " + typeFood.getType().name() + " to Pet."));
                     s.subQuantity(amountFood);
                 } else {
+                    EventLog.getInstance().logEvent(new Event("Fed the last "
+                            + typeFood.getType().name() + " to Pet."));
                     s.setSlot(EMPTY_SLOT);
                 }
                 return true;

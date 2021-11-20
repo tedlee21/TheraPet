@@ -1,5 +1,7 @@
 package ui;
 
+import model.EventLog;
+import model.Event;
 import model.Food;
 import model.FoodType;
 import model.Profile;
@@ -10,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -57,6 +61,7 @@ public class PetAppGUI extends JFrame {
 
         setTitle("Digital Pet");
         setSize(WIDTH, HEIGHT);
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreOnScreen();
         setVisible(true);
@@ -73,6 +78,14 @@ public class PetAppGUI extends JFrame {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent event) {
+                for (Event next : EventLog.getInstance()) {
+                    System.out.println(next.toString() + "\n");
+                }
+            }
+        });
     }
 
     /**
