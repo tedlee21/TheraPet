@@ -76,3 +76,11 @@ Added 1 of COOKIE to bag.
 Mon Nov 22 19:34:43 PST 2021
 Added 1 more of COOKIE to bag.
 
+##Phase 4: Task 3
+
+If I had more time to work on my project, I would have liked to be able to:
+- Refactor the duplication in my BagPanel and ShopPanel classes
+- Implement abstract classes to refactor duplicate code surrounding actions dependent on pet and food type
+- Refactor some conditional loops to instead make use of exceptions specific to the case
+- Refactor the passing of "this" to each Panel in PetAppGUI main class to improve coupling and cohesion
+- Refactor Panel classes to make use of the Observer Pattern learned in class

@@ -13,9 +13,7 @@ import model.*;
 public class ShopPanel extends JPanel {
     protected static final Integer WIDTH = 160;       //Width of the main panel
     private PetAppGUI main;                         //main GUI for access to other panels and user
-    protected Profile user;                         //main user profile
     protected JTextArea coins;                      //JTextArea displaying user's name and balance
-    protected BagPanel slots;                       //JPanel to access bag slot buttons
 
     // REQUIRES: mainUser must be instantiated
     // EFFECTS : main is set to mainImport; user is set to main.user; slots is set to main.bagPanel
@@ -23,8 +21,6 @@ public class ShopPanel extends JPanel {
     //           Stats panel is added, and Shop items are added
     public ShopPanel(PetAppGUI mainImport) {
         this.main = mainImport;
-        this.user = main.user;
-        this.slots = main.bagPanel;
         setLayout(new GridLayout(4, 1));
         Dimension size = new Dimension();
         size.width = WIDTH;
@@ -47,7 +43,7 @@ public class ShopPanel extends JPanel {
     private void initializeStats() {
         JPanel stats = new JPanel();
         stats.setBackground(Color.white);
-        coins = new JTextArea("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
+        coins = new JTextArea("Hi " + main.user.getName() + "\nYou have: " + main.user.getBalance() + " coins");
         coins.setEditable(false);
         stats.add(coins);
         add(stats);
@@ -99,10 +95,10 @@ public class ShopPanel extends JPanel {
         //           else displays popup window indicating insufficient balance
         @Override
         public void actionPerformed(ActionEvent evt) {
-            if (food.getPrice() <= user.getBalance()) {
-                user.subBalance(food.getPrice());
-                user.addFood(food, 1);
-                coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
+            if (food.getPrice() <= main.user.getBalance()) {
+                main.user.subBalance(food.getPrice());
+                main.user.addFood(food, 1);
+                coins.setText("Hi " + main.user.getName() + "\nYou have: " + main.user.getBalance() + " coins");
                 updateSlot(food);
             } else {
                 JOptionPane.showMessageDialog(null,
@@ -115,11 +111,11 @@ public class ShopPanel extends JPanel {
 
     // EFFECTS : updates slotButton in BagPanel with current quantity of food in the slot
     private void updateSlot(Food food) {
-        int index = user.findFood(food);
+        int index = main.user.findFood(food);
         for (int i = 0; i < Profile.MAX_SIZE; i++) {
             if (index == i) {
                 updateMapping(main.bagPanel.getSlotButton(i), food);
-                main.bagPanel.getSlotButton(i).setText("x " + user.readSlot(i).getQuantity());
+                main.bagPanel.getSlotButton(i).setText("x " + main.user.readSlot(i).getQuantity());
                 break;
             }
         }
@@ -158,13 +154,13 @@ public class ShopPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (food.getType() != FoodType.EMPTY) {
-                user.removeFood(food, 1);
+                main.user.removeFood(food, 1);
                 main.updatePetIconFood(food);
-                slots.textLog.textLog.setText("Thanks for the "
+                main.textPanel.textLog.setText("Thanks for the "
                         + main.foodToString(food.getType())
                         + ", "
-                        + user.getName() + "!! Yum, Yum!");
-                if (user.findFood(food) != -1) {
+                        + main.user.getName() + "!! Yum, Yum!");
+                if (main.user.findFood(food) != -1) {
                     updateSlot(food);
                 } else {
                     main.bagPanel.updateEmptySlots();

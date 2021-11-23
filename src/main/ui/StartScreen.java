@@ -47,8 +47,8 @@ public class StartScreen extends JFrame {
     }
 
     /**
-     * Represents action to be taken when user wants to load
-     * their game
+     * Represents action to be taken when user wants to start
+     * a new game
      */
     private class NewAction extends AbstractAction {
         private JDialog popup;

@@ -8,14 +8,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import model.Profile;
 import persistence.JsonWriter;
 
 // Represents a JPanel for which dialogue, the save button, and the coin button will be
 public class DialoguePanel extends JPanel {
     private static final Integer HEIGHT = 100;      //Height of the main panel
     private PetAppGUI main;                         //main GUI for access to other panels and user
-    private Profile user;                           //main user profile
     private JsonWriter jsonWriter;
     protected JTextArea textLog;
 
@@ -25,9 +23,8 @@ public class DialoguePanel extends JPanel {
     //           to main.user; sets up main JPanel for which dialogue, the save button, and the
     //           coin button will appear; layout is set to BorderLayout and preferred size is set
     public DialoguePanel(PetAppGUI mainImport) {
-        this.jsonWriter = mainImport.jsonWriter;
+        this.jsonWriter = new JsonWriter(main.JSON_STORE);
         this.main = mainImport;
-        this.user = main.user;
         setLayout(new BorderLayout());
         Dimension size = new Dimension();
         size.height = HEIGHT;
@@ -50,7 +47,7 @@ public class DialoguePanel extends JPanel {
         panelSize.width = (PetAppGUI.WIDTH - BagPanel.WIDTH);
         textPanel.setPreferredSize(panelSize);
         textPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(143, 111, 79), 2),
-                user.getPetName() + ": ",
+                main.user.getPetName() + ": ",
                 0, 0,
                 new Font(Font.SERIF, Font.BOLD,14), Color.white));
         textPanel.setBackground(new Color(180, 139, 98));
@@ -127,8 +124,9 @@ public class DialoguePanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             main.updatePetIconBase();
-            user.addBalance(1);
-            main.shopPanel.coins.setText("Hi " + user.getName() + "\nYou have: " + user.getBalance() + " coins");
+            main.user.addBalance(1);
+            main.shopPanel.coins.setText("Hi " + main.user.getName()
+                    + "\nYou have: " + main.user.getBalance() + " coins");
         }
     }
 
@@ -136,9 +134,9 @@ public class DialoguePanel extends JPanel {
     private void saveProfile() {
         try {
             jsonWriter.open();
-            jsonWriter.write(user);
+            jsonWriter.write(main.user);
             jsonWriter.close();
-            System.out.println("Saved " + user.getName() + " to " + PetAppGUI.JSON_STORE);
+            System.out.println("Saved " + main.user.getName() + " to " + PetAppGUI.JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + PetAppGUI.JSON_STORE);
         }

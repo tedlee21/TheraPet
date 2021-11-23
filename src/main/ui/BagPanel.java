@@ -12,8 +12,7 @@ import java.io.IOException;
 // Represents a JPanel that will display user's inventory from which they may feed the pet
 public class BagPanel extends JPanel {
     protected static final Integer WIDTH = 230;     //Width of the main panel
-    private PetAppGUI main;                         //main GUI for access to other panels and user
-    protected Profile user;                         //main user profile
+    private PetAppGUI main;                         //main GUI for access to other panels
     protected JButton slotButton1;
     protected JButton slotButton2;
     protected JButton slotButton3;
@@ -27,7 +26,6 @@ public class BagPanel extends JPanel {
     //          panel function; buttons are added to panel
     public BagPanel(PetAppGUI mainImport) {
         this.main = mainImport;
-        this.user = main.user;
         this.textLog = main.textPanel;
         setLayout(new GridLayout(2, 3));
         Dimension size = new Dimension();
@@ -47,10 +45,10 @@ public class BagPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS : makes and adds buttons representing each slot of user's storage
     private void addPanelButtons() {
-        slotButton1 = makeSlotButton(user.readSlot(0).getFood(), user.readSlot(0).getQuantity());
-        slotButton2 = makeSlotButton(user.readSlot(1).getFood(), user.readSlot(1).getQuantity());
-        slotButton3 = makeSlotButton(user.readSlot(2).getFood(), user.readSlot(2).getQuantity());
-        slotButton4 = makeSlotButton(user.readSlot(3).getFood(), user.readSlot(3).getQuantity());
+        slotButton1 = makeSlotButton(main.user.readSlot(0).getFood(), main.user.readSlot(0).getQuantity());
+        slotButton2 = makeSlotButton(main.user.readSlot(1).getFood(), main.user.readSlot(1).getQuantity());
+        slotButton3 = makeSlotButton(main.user.readSlot(2).getFood(), main.user.readSlot(2).getQuantity());
+        slotButton4 = makeSlotButton(main.user.readSlot(3).getFood(), main.user.readSlot(3).getQuantity());
         add(slotButton1);
         add(slotButton2);
         add(slotButton3);
@@ -98,13 +96,13 @@ public class BagPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (food.getType() != FoodType.EMPTY) {
-                user.removeFood(food, 1);
+                main.user.removeFood(food, 1);
                 main.updatePetIconFood(food);
                 textLog.textLog.setText("Thanks for the "
                         + main.foodToString(food.getType())
                         + ", "
-                        + user.getName() + "!! Yum, Yum!");
-                if (user.findFood(food) != -1) {
+                        + main.user.getName() + "!! Yum, Yum!");
+                if (main.user.findFood(food) != -1) {
                     updateSlot(food);
                 } else {
                     updateEmptySlots();
@@ -117,10 +115,10 @@ public class BagPanel extends JPanel {
     // MODIFIES: slotButton
     // EFFECTS : updates slotButton in BagPanel with current quantity of food in the slot
     private void updateSlot(Food food) {
-        int index = user.findFood(food);
+        int index = main.user.findFood(food);
         for (int i = 0; i < Profile.MAX_SIZE; i++) {
             if (index == i) {
-                getSlotButton(i).setText("x " + user.readSlot(i).getQuantity());
+                getSlotButton(i).setText("x " + main.user.readSlot(i).getQuantity());
                 break;
             }
         }
@@ -130,7 +128,7 @@ public class BagPanel extends JPanel {
     // EFFECTS : updates each empty slot to reflect its current contents
     public void updateEmptySlots() {
         for (int i = 0; i < Profile.MAX_SIZE; i++) {
-            if (user.readSlot(i).getFood().getType() == FoodType.EMPTY) {
+            if (main.user.readSlot(i).getFood().getType() == FoodType.EMPTY) {
                 emptySlot(getSlotButton(i));
             }
         }

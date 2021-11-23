@@ -5,7 +5,6 @@ import model.Event;
 import model.Food;
 import model.FoodType;
 import model.Profile;
-import persistence.JsonWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,7 +24,6 @@ public class PetAppGUI extends JFrame {
     protected static final int WIDTH = 800;
     protected static final int HEIGHT = 500;
     protected static final String JSON_STORE = "./data/profile.json";
-    protected JsonWriter jsonWriter;
     private Scanner input;
 
     protected Profile user;                     //main user profile
@@ -48,7 +46,7 @@ public class PetAppGUI extends JFrame {
     private void runPetGUI(boolean load) {
         setLayout(new BorderLayout());
         addMouseListener(new DesktopFocusAction());
-        petPanel = new PetPanel(user);
+        petPanel = new PetPanel(this);
         textPanel = new DialoguePanel(this);
         playPanel = new PlayPanel(this);
         bagPanel = new BagPanel(this);
@@ -77,7 +75,6 @@ public class PetAppGUI extends JFrame {
     private void initSystems() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
-        jsonWriter = new JsonWriter(JSON_STORE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
