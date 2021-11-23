@@ -52,27 +52,27 @@ to me in more ways than one.
 
 ## Phase 4: Task 2
 
-Sat Nov 20 13:04:22 PST 2021
-Added 1 of COOKIE to bag.
+Mon Nov 22 19:34:30 PST 2021
+Loaded 1 of PIZZA to bag.
 
-Sat Nov 20 13:04:24 PST 2021
-Added 1 more of COOKIE to bag.
+Mon Nov 22 19:34:30 PST 2021
+Loaded 1 of ICE_CREAM to bag.
 
-Sat Nov 20 13:04:25 PST 2021
-Added 1 of ICE_CREAM to bag.
+Mon Nov 22 19:34:30 PST 2021
+Loaded 2 of COOKIE to bag.
 
-Sat Nov 20 13:04:27 PST 2021
+Mon Nov 22 19:34:37 PST 2021
 Fed 1 of COOKIE to Pet.
 
-Sat Nov 20 13:04:29 PST 2021
-Fed the last ICE_CREAM to Pet.
-
-Sat Nov 20 13:04:31 PST 2021
+Mon Nov 22 19:34:37 PST 2021
 Fed the last COOKIE to Pet.
 
-Sat Nov 20 13:04:37 PST 2021
-Added 1 of PIZZA to bag.
-
-Sat Nov 20 13:04:38 PST 2021
+Mon Nov 22 19:34:39 PST 2021
 Fed the last PIZZA to Pet.
+
+Mon Nov 22 19:34:40 PST 2021
+Added 1 of COOKIE to bag.
+
+Mon Nov 22 19:34:43 PST 2021
+Added 1 more of COOKIE to bag.
 

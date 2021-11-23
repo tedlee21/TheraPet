@@ -104,6 +104,10 @@ public class Profile implements Writable {
     // REQUIRES: 0 <= slotNum < MAX_SIZE
     // EFFECTS : sets index slotNum of storage as given slot
     public void setSlot(Slot slot, int slotNum) {
+        if (slot.getFood().getType() != FoodType.EMPTY) {
+            EventLog.getInstance().logEvent(new Event("Loaded "
+                    + slot.getQuantity() + " of " + slot.getFood().getType().name() + " to bag."));
+        }
         storage.set(slotNum, slot);
     }
 
