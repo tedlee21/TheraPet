@@ -1,6 +1,7 @@
 # My CPSC 210 Term Project
 
 ## Desktop Digital Pet
+*All spritework is original*
 
 For my project, I will attempt to design a desktop program that will
 house a digital pet that you can:
