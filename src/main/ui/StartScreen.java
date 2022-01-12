@@ -63,7 +63,7 @@ public class StartScreen extends JFrame {
         // EFFECTS : opens new popup window to bring user through setup process
         @Override
         public void actionPerformed(ActionEvent evt) {
-            popup = new JDialog((Dialog) null, "Choose a Pet!", true);
+            popup = new JDialog((Dialog) null, "Choose your Pet!", true);
             popup.setSize(400,400);
             popup.setLocationRelativeTo(null);
             popup.setLayout(new GridLayout(5,1));
