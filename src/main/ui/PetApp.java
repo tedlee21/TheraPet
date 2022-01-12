@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-//Digital Pet Application        //Console interface code based off TellerApp file from 210 class
-                                 //Data persistence implementations based off JsonSerializationDemo file
+//Console Based Digital Pet Application        //Console interface code based off TellerApp file from 210 class
+                                               //Data persistence implementations based off JsonSerializationDemo file
 public class PetApp {
     private static final String JSON_STORE = "./data/profile.json";
     private static final Integer INITIAL_BAL = 50;
