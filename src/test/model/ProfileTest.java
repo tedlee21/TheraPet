@@ -35,7 +35,7 @@ public class ProfileTest {
     @Test
     public void testGetSlots() {
         List<Slot> storage = bag.getSlots();
-        assertEquals(6, storage.size());
+        assertEquals(4, storage.size());
         assertTrue(bag.isEmpty());
     }
 

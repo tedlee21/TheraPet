@@ -1,0 +1,36 @@
+{
+    "petName": "wot",
+    "balance": 50,
+    "petType": "BIRD",
+    "name": "teddy",
+    "storage": [
+        {
+            "quantity": 0,
+            "food": {
+                "price": 0,
+                "type": "EMPTY"
+            }
+        },
+        {
+            "quantity": 0,
+            "food": {
+                "price": 0,
+                "type": "EMPTY"
+            }
+        },
+        {
+            "quantity": 0,
+            "food": {
+                "price": 0,
+                "type": "EMPTY"
+            }
+        },
+        {
+            "quantity": 0,
+            "food": {
+                "price": 0,
+                "type": "EMPTY"
+            }
+        }
+    ]
+}
