@@ -3,6 +3,8 @@
 ## Desktop Digital Pet
 *All spritework is original*
 
+Please checkout the *Gameplay Screenshots* Folder for Images!
+
 For my project, I will attempt to design a desktop program that will
 house a digital pet that you can:
 - *Choose which type of pet to raise*
