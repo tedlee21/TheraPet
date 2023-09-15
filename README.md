@@ -1,16 +1,21 @@
-# My CPSC 210 Term Project
+# TheraPet
 
-## Desktop Digital Pet
+## Desktop Digital Therapy Pet 
 *All spritework is original*
 
-Please checkout the *Gameplay Screenshots* Folder for Images!
-
-For my project, I will attempt to design a desktop program that will
-house a digital pet that you can:
+This was my school turned into passion project when I was taking my first software engineering course.
+I set out to design a desktop program that will house a digital pet that you can:
 - *Choose which type of pet to raise*
 - *Play with*
 - *Feed*
 - *Talk to*
+
+![TheraPet Home Screen](Gameplay Screenshots/ApplicationPanel.jpeg)
+
+*Be sure to check out more in-game screenshots in ./Gameplay Screenshots!*
+
+
+## My project specifications before development:
 
 However, this is no ordinary pet. This pet will be there with you through thick and 
 thin, and give you motivation suited to the mood you're in! As you take care of your pet,
@@ -19,8 +24,8 @@ just data through a screen. I think this application
 / desktop game will be great for people of all ages who get stressed or overwhelmed
 and want a little pick-me-up while doing work on a PC. 
 
-*Perhaps a little TMI but*, I struggle with clinical anxiety and depression, and I think I personally 
-would like to use this application once I finish it. Dealing with these issues first hand, I always have an idea
+As a human being who sometimes finds themselves overwhelmed by life, I think I personally 
+would like to use this application once I finish it. When things get tough, I always have an idea
 of what I would like to hear as motivation / consolement at times, but am never quite sure where to find
 what I need to hear. Also, seeing motivational messages soley written in text
 lacks impact in my opinion. I want to personify these messages I would find helpful
