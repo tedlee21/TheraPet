@@ -10,7 +10,7 @@ I set out to design a desktop program that will house a digital pet that you can
 - *Feed*
 - *Talk to*
 
-![TheraPet Home Screen](Gameplay Screenshots/ApplicationPanel.jpeg)
+![TheraPet Home Screen](Gameplay%20Screenshots/ApplicationPanel.jpeg)
 
 *Be sure to check out more in-game screenshots in ./Gameplay Screenshots!*
 
